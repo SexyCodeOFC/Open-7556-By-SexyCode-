@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Client">
+      <UniqueIdentifier>{e491b281-2d7a-4a2c-82f1-3d5e4dfc8b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{99263edf-baaa-4c72-b84d-ef4f5299fcdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\CallBack">
+      <UniqueIdentifier>{5a1436fd-725d-4599-9a43-f7c8b7531a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Global">
+      <UniqueIdentifier>{cf5b6a1a-5bc5-451e-8585-c3d867a45cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Gui">
+      <UniqueIdentifier>{e163a909-0cd0-4534-83cd-1ea1be18cbed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\AntiHacker">
+      <UniqueIdentifier>{ec5a0003-9850-4939-afda-84d635f0e97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Functions">
+      <UniqueIdentifier>{b85e4365-cfe5-46bd-8c3d-f8778c2f13fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\HookPatch">
+      <UniqueIdentifier>{2c824a0a-cff9-4e56-81b7-665390fb8d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\PacketControl">
+      <UniqueIdentifier>{a0a6de8b-0b16-47a8-9b93-c5ffca2aba4b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="HookPatch.cpp">
+      <Filter>Client\HookPatch</Filter>
+    </ClCompile>
+    <ClCompile Include="CallBack.cpp">
+      <Filter>Client\CallBack</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>Client\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiControl.cpp">
+      <Filter>Client\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Anti_RE.cpp">
+      <Filter>Client\AntiHacker</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Client\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketControl.cpp">
+      <Filter>Client\PacketControl</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantPatch.cpp">
+      <Filter>Client\HookPatch</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Client\CallBack</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\include\hook.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\nativefunctions.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\packetstruct.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\singleton.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\structs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="HookPatch.h">
+      <Filter>Client\HookPatch</Filter>
+    </ClInclude>
+    <ClInclude Include="CallBack.h">
+      <Filter>Client\CallBack</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Client\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiControl.h">
+      <Filter>Client\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Anti_RE.h">
+      <Filter>Client\AntiHacker</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Client\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketControl.h">
+      <Filter>Client\PacketControl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantPatch.h">
+      <Filter>Client\HookPatch</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Client\CallBack</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

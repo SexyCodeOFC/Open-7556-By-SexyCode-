@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{4d433bdd-47df-4267-8f73-3891d76c603c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DBSRV">
+      <UniqueIdentifier>{fdd2c1b8-8453-4179-a1f9-e462572ac553}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\hook.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\singleton.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="DBSRV.h">
+      <Filter>DBSRV</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ConstantPatch.h">
+      <Filter>DBSRV</Filter>
+    </ClInclude>
+    <ClInclude Include="HookPatch.h">
+      <Filter>DBSRV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\nativefunctions.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\structs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\random.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>DBSRV</Filter>
+    </ClInclude>
+    <ClInclude Include="HookImpl.h">
+      <Filter>DBSRV</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="DBSRV.cpp">
+      <Filter>DBSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="ConstantPatch.cpp">
+      <Filter>DBSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="HookPatch.cpp">
+      <Filter>DBSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>DBSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="HookImpl.cpp">
+      <Filter>DBSRV</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

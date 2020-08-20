@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{149748f1-b782-4ece-9223-e898202a4626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV">
+      <UniqueIdentifier>{36807ada-412e-496d-9a5f-0f688fdd1693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\Assembly">
+      <UniqueIdentifier>{f4049b16-99be-4156-b41c-07ee4e6b1111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG">
+      <UniqueIdentifier>{78dbb070-0c9b-41f6-a1d0-a26794356de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9e99bc35-dd9f-4239-b7aa-1837efaf728e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Assembly">
+      <UniqueIdentifier>{d1422012-90e2-4aba-89f4-dc0575dd0468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\PacketControl">
+      <UniqueIdentifier>{cedabdf5-15fc-46ec-8a79-5f33676aa5d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\Item">
+      <UniqueIdentifier>{6be984b2-f80e-4ed8-a92a-8a9fb8564599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\NPC">
+      <UniqueIdentifier>{6bf4b38d-4a4e-4963-b51b-e4310335c4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\Message">
+      <UniqueIdentifier>{958382fa-5a35-41bd-b620-83a064d69ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\System">
+      <UniqueIdentifier>{352d6f50-ec8e-4e89-a7b3-eaf9ad721c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\PacketControl\FIX MSG">
+      <UniqueIdentifier>{2f0f4fff-bbc6-4c19-a9dd-de6635e31bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\Party">
+      <UniqueIdentifier>{986a819c-39e9-46be-97ea-a02c32f25973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\War">
+      <UniqueIdentifier>{9d920fcd-d9c9-4611-a6f6-522eb89c07d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\War\Tower">
+      <UniqueIdentifier>{72e558e8-ec31-43fe-aa56-412df39369cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\hook.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\nativefunctions.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\singleton.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\include\structs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\packetstruct.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="..\include\random.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ItemEffect.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantPatch.h">
+      <Filter>Header Files\Assembly</Filter>
+    </ClInclude>
+    <ClInclude Include="HookImpl.h">
+      <Filter>Header Files\Assembly</Filter>
+    </ClInclude>
+    <ClInclude Include="HookPatch.h">
+      <Filter>Header Files\Assembly</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TMSRV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessClientMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Language.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessSecMinTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWarTower.h">
+      <Filter>TMSRV\War\Tower</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TMSRV.cpp">
+      <Filter>TMSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>TMSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="HookImpl.cpp">
+      <Filter>TMSRV\Assembly</Filter>
+    </ClCompile>
+    <ClCompile Include="HookPatch.cpp">
+      <Filter>TMSRV\Assembly</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantPatch.cpp">
+      <Filter>TMSRV\Assembly</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessClientMessage.cpp">
+      <Filter>TMSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessDBMessage.cpp">
+      <Filter>TMSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="AddMessage.cpp">
+      <Filter>TMSRV\PacketControl</Filter>
+    </ClCompile>
+    <ClCompile Include="ReadMessage.cpp">
+      <Filter>TMSRV\PacketControl</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_DropItem.cpp">
+      <Filter>TMSRV\MSG\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_GetItem.cpp">
+      <Filter>TMSRV\MSG\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_UseItem.cpp">
+      <Filter>TMSRV\MSG\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_GriffinMaster.cpp">
+      <Filter>TMSRV\MSG\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_Quest.cpp">
+      <Filter>TMSRV\MSG\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_MessageWhisper.cpp">
+      <Filter>TMSRV\MSG\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="Fix_MSG_Attack.cpp">
+      <Filter>TMSRV\PacketControl\FIX MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Fix_MSG_Action.cpp">
+      <Filter>TMSRV\PacketControl\FIX MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_Attack.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_Action.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_AccountLogin.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_TradingItem.cpp">
+      <Filter>TMSRV\MSG\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_AcceptParty.cpp">
+      <Filter>TMSRV\MSG\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_Buy.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessSecMinTimer.cpp">
+      <Filter>TMSRV</Filter>
+    </ClCompile>
+    <ClCompile Include="CWarTower.cpp">
+      <Filter>TMSRV\War\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_UpdateItem.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_CombineItemAilyn.cpp">
+      <Filter>TMSRV\MSG\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_EventoLojinha.cpp">
+      <Filter>TMSRV\MSG\System</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_CombineItemOdin.cpp">
+      <Filter>TMSRV\MSG\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_Alquimista_Real.cpp">
+      <Filter>TMSRV\MSG\NPC</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ChangeLog.txt" />
+  </ItemGroup>
+</Project>

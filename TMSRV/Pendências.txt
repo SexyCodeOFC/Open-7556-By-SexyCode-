@@ -1,0 +1,12 @@
+// Importante
+Adicionar guerra de torre para 1 Canal
+Salvar o KhepraGuildKiller
+Dragão e Coroa não somem após guerra.
+
+// Update
+Adicionar um sistema de refinação de capa e arcana sub cele
+Adicionar um sistema de evolução de amuleto mistico para arcano 10/10
+controle de rate de todas as composiçoes nativas
+Implementar sistema de ranking.
+Arrumar o Conexão anterior finalizada.
+Organizar melhor o ClientPatch.

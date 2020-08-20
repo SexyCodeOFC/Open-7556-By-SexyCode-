@@ -1,0 +1,10 @@
+Clientpatch deve ser em Release na hora de compilar. ( para funciona a captura de mac )
+TM/DB Debug
+falta colocar valor nos itens donates (descrição na clientpatch)
+configura os itens do /novato
+configurar itens do npc evento
+configurar itens do bonus donate
+
+na pasta TMsrv/run/DataBase
+Mileage.txt
+Moedas.txt

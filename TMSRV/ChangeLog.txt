@@ -1,0 +1,139 @@
+************************** ALASTAR 7.54 CHANGLOG **************************
+
+19/11/19 - Removido os Hooks que interfiram no nativo das Volatiles e Npcs.
+19/11/19 - Adicionado o controle de Volatiles. (Usei como base o controle do Emu).
+19/11/19 - Adicionado o Mestre Grifo. (não sei se o shutdown no 7.54 funciona. Mais qualquer coisa e só remover).
+ 
+20/11/19 - Adicionado o controle de Npcs. (Usei como base o controle do Emu).
+20/11/19 - Como adicionei os controles de Volatiles e Npcs Removi os hooks de ambo para evitar erro.
+20/11/19 - Adicionado os Feijões e Removedor.
+
+21/11/19 - Adicionado o Báu e o Frango de 1 hora.(OBS: Ao usar qualquer volatile adicionada na source da um erro no log da tm)
+
+23/11/19 - Corrigido alguns warnings da source.
+23/11/19 - Adicionado g_pItemList, g_pSpell.
+23/11/19 - Foi desativado o amount item no MSG_TrandingItem.
+23/11/19 - Alterado os ponteiros pMobGrid e pItemGrid.
+23/11/19 - Corrigido o Max Carry de 60 para 63.
+23/11/19 - Corrigido a Poeira que retornava refinação.
+23/11/19 - Adicionado efeito dos buffs no ClientPatch.
+23/11/19 - Foi feito uma modificação no packet UseItem para definir ret = false, caso adicione novos itens.
+23/11/19 - Adicionado g_pMessageStringTable para puxar os messages nativos.
+23/11/19 - Removido algumas funções que puxavam ponteiros sem necessidade.
+23/11/19 - Adicionado as funções nativas CrackLog e GetEmptyAffect.
+
+24/11/19 - Corrigido mais lugares onde a verificação do inventário era 60.
+24/11/19 - Corrigido o bug onde os itens colocados no final do inventário duplicavam.
+24/11/19 - Corrigido o saldo negativo no Guarda Cargo.
+24/11/19 - Removido a mensagem duplicada ao falhar ambas Poeiras.
+
+29/11/19 - Corrigido o comando /gm +set clearinv.
+29/11/19 - Adicionado as funções nativas: GetCurKill e SetPKPoint.
+29/11/19 - Corrigido a combinação da Secreta de Vento.
+29/11/19 - Adicionado um controle em % da combinação de pedra secreta.
+
+30/11/19 - Adicionado um controle em % para combinação do item Pedra Espiritual com adicional.
+30/11/19 - Desativado o reconnectDB para evitar bugs.
+
+02/12/19 - Adicionado o MSG Action e o MSG Attack.
+
+03/12/19 - Adicionado controle das resoluções no ClientPatch.
+
+07/12/19 - Removido a reorganização do Cargo.
+07/12/19 - Corrigido a utilização do packet MSG_UpdateItem.
+07/12/19 - Corrigido os Packets MSG_Action e MSG_Attack.
+07/12/19 - Corrigido os portões da Guerra de Noatun.
+07/12/19 - Corrigido as torres da Guerra de Noatun.
+
+08/12/19 - Adicionado o Hook para aumentar o tempo das Joias PvP
+08/12/19 - Adicionado o Hook para aumentar o limite máximo do drop fixo do Servidor.
+
+13/12/19 - Corrigido a função Fix_MSG_Action_RECV que estava dando warning. 
+
+19/12/19 - Adicionado um Hook para deixar sempre a Pista de Runas Ativa - (Para Testes).
+19/12/19 - Adicionado um Hook no qual aumenta o valor da rand para Pista de Runas +4.
+
+21/12/19 - Adicionado um Hook no qual descarta o resto do packet de Attack (Futuramente verificar e refazer).
+
+23/12/19 - Corrigido o bug quando matava os 4 mobs não era teleportado para o Boss da Pista +4.
+23/12/19 - Adicionado um ponteiro para mNPCGen para o controle dos mobs do NPCGener.
+
+28/12/19 - Adicionado a variável global SystemTime.
+28/12/19 - Adicionado antihack via server-side.
+
+29/12/19 - Corrigido erro de lógica no antihack server-side.
+
+31/12/19 - Adicionado VolatileItemBox no ClientPatch.
+31/12/19 - Adicionado ItemDescription no ClientPatch.
+31/12/19 - Adicionado um verificador para Dll's injetadas no WYD.exe. (Falta Testar).
+
+01/01/20 - Adicionado um hook para alterar a face das montarias temporarias no ClientPatch.
+01/01/20 - Adicionado um hook que envia um pacote para o WYD.exe para atualizar o Item Description.
+
+02/01/20 - Adicionado um Hook para atualizar em tempo real o Controle de Mana no PvP.
+02/01/20 - Adicionado Controle de SendPacket no ClientPatch.
+02/01/20 - Adicionado um bloqueador para não conectar com outra ClientPatch.
+02/01/20 - Adicionado o Anti OpenCargo Hack.
+
+03/01/20 - Adicionado o Anti SpeedMove Hack. (Testes).
+03/01/20 - Adicionado o Anti PartyHack.
+03/01/20 - Corrigido o uso do Item Jóia da Armazenagem.
+
+04/01/20 - Corrigido o LastReqParty, agora verifica a index.
+04/01/20 - Removido algumas funções inutilizadas do ClientPatch.
+
+05/01/20 - Aumentado 1 ponto de range no Anti-RangeHack.
+05/01/20 - Removido o CloseUser do Anti-SpeedHack.
+05/01/20 - Removido o CloseUser do ReadMessage nativo.
+05/01/20 - Agora a size é enviada corretamente no Attack. (Testando).
+05/01/20 - Adicionado um CheckPacket no ReadMessage.
+
+06/01/20 - Corrigido um bug onde o MacAddress não era salvo no arquivo.
+06/01/20 - Adicionado o banimento por Mac.
+
+07/01/20 - Adicionado o banimento permante (Obs: se tive alguma conta bloqueada e o serve reniciar o cara loga normalmete).
+07/01/20 - Adicionado o codigo de npc donate, (Obs: não deu muito certo não.)
+07/01/20 - Adicionado o Npc Unicornio.
+
+08/01/20 - Adicionado o Hook (multiplicador do baú exp).
+09/01/20 - Adicionada alguns comandos para melhorar adminsitração.
+
+12/01/20 - Adicionado um timer apenas para teste (War Noatum).
+12/01/20 - Adicionada um Hook para mudar a hora da guerra de noatun *teste)
+
+14/01/20 - Adicionado o Hook para correção do Critico.
+14/01/20 - Adicionado o GetCurrenteScorre.
+14/01/20 - Removido o Banned da source.
+14/01/20 - Adicionado um novo metodo de banimento por timestamp.
+14/01/20 - Adiciona um hook que corrige a Guerra de Noatun.
+
+18/01/20 - Após dias, meses, e muitas horas, finalmente foi corrigido o packet de Attack. Queria primeiramente agradeçer a minha familia por conseguir realizar essa proeza, apesar de nenhum estar ao meu lado, apenas agradeço. Além do mais, agradeço a Deus por esse tempo que fiquei estudando para conseguir este problema. Por fim, a equipe que sempre estava on-line comigo. Obrigado.
+18/01/20 - Removido o hook que pulava a checagem do amount item no MSG_TradingItem.
+
+20/01/20 - Adicionado o hook que desativa a Guerra de Torres nativa.
+20/01/20 - Adicionado o hook que desativa o Portão Infernal nativo.
+20/01/20 - Adicionado o comando /gm +set kill "nome do npc" - Sem aspas.
+20/01/20 - Corrigido parcialmente a compra do NPC, porém, não esta enviando adicional para o myinvpos.
+20/01/20 - Corrigido a compra do NPC.
+20/01/20 - Corrigido um bug onde a Guerra de Castelos iniciava todos os dias.
+20/01/20 - Adicionado um hook para controle do horário da Guerra de Cidades e Guerra de Castelos.
+
+21/01/20 - Adicionado um hook para controle da Rate da Replation.
+21/01/20 - Adicionado sobreposição no _MSG_Quest na NPC Kibita.
+21/01/20 - Melhorado a RATE do PL.
+
+23/01/20 - Corrgido a velocidade do Ataque.
+23/01/20 - Ativado de volta o PKDropItem.
+
+25/01/20 - Removido o Limite de níveis no Grupo (Remover no Oficial).
+25/01/20 - Adicionado o Comando /nts (Remover no Oficial).
+25/01/20 - Removido o Controle de Mana 7.55.
+25/01/20 - Adicionado Controle de Mana 7.54.
+25/01/20 - Adicionado trava para Barra de Mithril não descer mais que -50.
+25/01/20 - Removido a Tiny implementada na Source. Agora é nativa.
+
+21/03/20 - Adicionado Guerra de Torres.
+21/03/20 - Adicionado uma variável de Mileage para conta.
+21/03/20 - Adicionado valores dos itens cash no ClientPatch.
+21/03/20 - Corrigido o uso da Barra de Mithril.
+21/03/20 - Adicionado um hook para as sapphira de ambos os reinos serem 20.
