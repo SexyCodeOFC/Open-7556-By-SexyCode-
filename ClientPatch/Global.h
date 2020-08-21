@@ -11,9 +11,7 @@ public:
 	static bool Effects2;
 	static bool MacroPergas;
 	static bool CameraLivre;
-	static int	Donate;
-	static int	pTicketGold;
-	static int	pTicketPrata;
+	static int	Donate; 
 	static int LastPacket;
 	static SvRtn ServerList;
 	static char StoreName[20];

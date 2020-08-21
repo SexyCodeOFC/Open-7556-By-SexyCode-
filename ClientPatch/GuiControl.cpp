@@ -389,32 +389,13 @@ namespace GuiControl
 
 #pragma region Show_DonateInventory
 			char msg[30];
-			sprintf_s(msg, "%d", Global::Donate);
+			sprintf(msg, "%d", Global::Donate);
 			auto lb_donate = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(250099);
 
-			if (lb_donate != NULL) 
-				lb_donate->setText(msg, 0); 
+			if (lb_donate != NULL)
+				lb_donate->setText(msg, 0);
 #pragma endregion	
 
-#pragma region Show_TicketGoldInventory
-			 
-			char zmsg[30];
-			sprintf_s(zmsg, "%d", Global::pTicketGold);
-			auto lb_tgold = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(260099);
-
-			if (lb_tgold != NULL)
-				lb_tgold->setText(zmsg, 0);
-#pragma endregion	
-
-#pragma region Show_TicketPrataInventory
-			char msgz[30];
-			sprintf_s(msgz, "%d", Global::pTicketPrata);
-			auto lb_tprata = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(260100);
-
-			if (lb_tprata != NULL)
-				lb_tprata->setText(msgz, 0);
-
-#pragma endregion	
 
 		}
 

@@ -316,13 +316,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 	{
 		char szMsg[96];
 		sprintf(szMsg, "!Donate Coins: [%d]", pUserData[conn].AccountInfo.Cash);
-		SendClientMessage(conn, szMsg);
-		char szMsg2[96];
-		sprintf(szMsg2, "!Ticket Gold: [%d]", pUserData[conn].AccountInfo.sTicketGold);
-		SendClientMessage(conn, szMsg2);
-		char szMsg3[96];
-		sprintf(szMsg3, "!Ticket Prata: [%d]", pUserData[conn].AccountInfo.sTicketPrata);
-		SendClientMessage(conn, szMsg3);
+		SendClientMessage(conn, szMsg);		 
 		return false;
 	}
 
@@ -996,14 +990,14 @@ bool Exec_MSG_ComandClienter(const int32_t client, p334h* const packet)
 				if (i == 5000) //aqui e o valor de cash que o cara poe
 				{					
 					Func::SendItem2(client, &bonus1); //  ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-					pUserData[client].AccountInfo.sTicketGold += 10;
+					 
 					SendClientMessage(client, Func::strFmt("!Você recebeu [01] Bau e [10] Tickets Gold pela ativação"));
 				 
 				}
 				else if (i == 11000)
 				{
 					Func::SendItem2(client, &bonus2); // ITEM PARA RECEBER PELO VALOR DONATE ATIVADO 
-					pUserData[client].AccountInfo.sTicketPrata += 10;
+				 
 					SendClientMessage(client, Func::strFmt("!Você recebeu [02] Bau e [10] Tickets Prata pela ativação"));
 					 
 				}

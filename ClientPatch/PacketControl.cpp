@@ -149,39 +149,21 @@ namespace Packet
 
 				return make_tuple((char*)packet, NoError);
 			}
-
 			tuple<char*, Error> RecvEvent::Donate(int id, MSG_STANDARD* packet)
 			{
 				if (id == 0xDDF)
 				{
-					auto p = (pDNTh*)packet; 
-					Global::Donate = p->donate; 
-					Global::pTicketGold = p->tgold;
-					Global::pTicketPrata = p->tprata;
-#pragma region showdonate 
+					pDNTh* p = (pDNTh*)packet;
+
+					Global::Donate = p->donate;
+
 					char msg[30];
 					sprintf(msg, "%d", Global::Donate);
 					auto lb_donate = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(250099);
 
-					if (lb_donate != NULL) 
-						lb_donate->setText(msg, 0);// aqui mostra o 0 caso n tiver o donate na conta 
-#pragma endregion 
-#pragma region showticketg 
-					char zmsg[30];
-					sprintf(zmsg, "%d", Global::pTicketGold);
-					auto lb_tgold = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(260099);
+					if (lb_donate != NULL)
+						lb_donate->setText(msg, 0);
 
-					if (lb_tgold != NULL)
-						lb_tgold->setText(zmsg, 0);// aqui mostra o 0 caso n tiver o donate na conta 
-#pragma endregion 
-#pragma region showticketp 
-					char msgz[30];
-					sprintf(msgz, "%d", Global::pTicketPrata);
-					auto lb_tprata = (GUI_LABEL*)Game::getInstance()->pInterface->getGui(260100);
-
-					if (lb_tprata != NULL)
-						lb_tprata->setText(msgz, 0);// aqui mostra o 0 caso n tiver o donate na conta 
-#pragma endregion 
 					return make_tuple((char*)packet, Error::NoError);
 				}
 				else if (id == 0xAFC)

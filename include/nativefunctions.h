@@ -158,7 +158,7 @@ static int32_t __cdecl CalcAddress(int32_t addr)
 #define addr_client_chat_2 CalcAddress(0x00406AC8 - 0x400000)
 #define addr_client_chat_3 CalcAddress(0x00408569 - 0x400000)
 #define IPLocal "127.0.0.1"
-#define IPServer "142.4.192.240"
+#define IPServer "127.0.0.1"
 #define IPTeste "127.0.0.1"
 #endif
 

@@ -77,7 +77,7 @@ bool HookPatch::initialize()
 		hooks.setHook(eHookType::JMP, 0x45CE13, 0x45CEC2, 2);
 
 		/* Corrige a reoganização no baú */
-		hooks.setHook(eHookType::JMP, 0x4A2800, 0x4A28F3, 5);
+		//hooks.setHook(eHookType::JMP, 0x4A2800, 0x4A28F3, 5);
 
 		/* Corrige a utilização do Packet UpdateItem 0x374 */
 		hooks.setHook(eHookType::JE, 0x45E50D, 0x47D690);

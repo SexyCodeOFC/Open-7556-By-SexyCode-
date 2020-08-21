@@ -561,16 +561,11 @@ struct pD1Dh
 };
  
 const uint16_t _pDNTh = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
-
 struct pDNTh
 {
 	MSG_STANDARD Header; // 0 - 11
-	int donate;	 
-	int tgold;
-	int tprata;
+	int donate;	
 };
- 
-
 const short  _p3BBh = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
 struct p3BBh
 {

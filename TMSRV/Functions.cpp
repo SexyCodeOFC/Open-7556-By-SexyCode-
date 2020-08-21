@@ -582,19 +582,13 @@ void Func::UpdateStatus(int clientId)
 
 void Func::SendDonateUpdate(int clientId)
 {
-
 	auto userData = &pUserData[clientId];
 
-	pDNTh p; 
+	pDNTh p;
 	p.Header.Size = sizeof(pDNTh);
 	p.Header.Type = 0xDDF;
 	p.Header.ID = clientId;
-
-	//p.donate = pUserData[clientId].AccountInfo.Cash;
-
-	p.tgold = pUserData[clientId].AccountInfo.sTicketGold;
-
-	//p.tprata = pUserData[clientId].AccountInfo.sTicketPrata;
+	p.donate = userData->AccountInfo.Cash;
 
 	SendPacket2(clientId, &p, sizeof(p3BBh));
 

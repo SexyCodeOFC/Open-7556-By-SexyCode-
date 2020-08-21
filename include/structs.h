@@ -386,8 +386,6 @@ struct UserData
 		
 		char LastIP[16];
 		unsigned int Cash;
-		unsigned int sTicketGold;
-		unsigned int sTicketPrata;
 		unsigned int NewbieReward;
 		unsigned int Type;
 		struct
