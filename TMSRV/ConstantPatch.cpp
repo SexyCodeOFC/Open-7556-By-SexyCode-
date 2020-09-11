@@ -76,7 +76,7 @@ void ConstantPatch::setOtherValues()
 	hook.setValue(0x419B5C + 1, 59);
 
 	/* Pista de Runas ativa mesmo com kefra vivo */
-	hook.setValue(0x8C76170, 1);
+	//hook.setValue(0x8C76170, 1);
 
 	/* Correção para combinação da Secreta Vento */
 	hook.setValue(0x480A4C, 5122);
@@ -128,32 +128,32 @@ void ConstantPatch::setOtherValues()
 	/* Chance do Lac (+6 ao +9) - Item Arch Normal*/
 
 	hook.setValue<uint8_t>(0x595270, 0x64);      //+6 
-	hook.setValue<uint8_t>(0x595274, 0x64);      //+7 
-	hook.setValue<uint8_t>(0x595274 + 4, 0x64); // +8 
-	hook.setValue<uint8_t>(0x595274 + 8, 0x64);//+9  
+	hook.setValue<uint8_t>(0x595274, 0x28);      //+7 
+	hook.setValue<uint8_t>(0x595274 + 4, 0x28); // +8 
+	hook.setValue<uint8_t>(0x595274 + 8, 0x28);//+9  
 
 	/* Chance do Lac (+6 ao +9) - Item Arch Anct */
 
 	hook.setValue<uint8_t>(0x5952A0, 0x64); // + 6  
-	hook.setValue<uint8_t>(0x5952A0 + 4, 0x64);//+7 
-	hook.setValue<uint8_t>(0x5952A0 + 8, 0x64);//+8 
-	hook.setValue<uint8_t>(0x5952A0 + 12, 0x64);//+9 
+	hook.setValue<uint8_t>(0x5952A0 + 4, 0x28);//+7 
+	hook.setValue<uint8_t>(0x5952A0 + 8, 0x23);//+8 
+	hook.setValue<uint8_t>(0x5952A0 + 12, 0x23);//+9 
 
 	/* Chance do Lac (+6 ao +9) - Item Mortal Normal D*/
 
 	hook.setValue<uint8_t>(0x595240, 0x64);//+6 
 	hook.setValue<uint8_t>(0x595240 + 4, 0x64);//+7 
-	hook.setValue<uint8_t>(0x595240 + 8, 0x64);// +8 
-	hook.setValue<uint8_t>(0x595240 + 12, 0x64);// +9 
+	hook.setValue<uint8_t>(0x595240 + 8, 0x28);// +8 
+	hook.setValue<uint8_t>(0x595240 + 12, 0x28);// +9 
 
 	/* Arch Normal +10 ~ +11 */
-	hook.setValue<uint8_t>(0x595284, 0x64);//+ 11 
+	hook.setValue<uint8_t>(0x595284, 0x1E);//+ 11 
 
 	/* Arch Anct +10 ~ +11 */
-	hook.setValue<uint8_t>(0x5952B4, 0x64);//+ 11 
+	hook.setValue<uint8_t>(0x5952B4, 0x0A);//+ 11 
 
 	/* Mortal Normal D +10 ~ +11 */
-	hook.setValue<uint8_t>(0x5952B454, 0x64);//+ 11 
+	hook.setValue<uint8_t>(0x5952B454, 0x28);//+ 11 
 
 
 }
@@ -176,7 +176,7 @@ void ConstantPatch::setPointer()
 	g_pMessageStringTable = reinterpret_cast<char(*)[MAX_STRINGTABLESIZE]>((char*)0x8A67C4); 
 	mNPCGen = (CNPCGenerator*)0xBDEAA0;
 	g_pFormation = reinterpret_cast<char(*)[12][2]>((char*)0x597048);
-	//Global::guild = reinterpret_cast<STRUCT_GUILD(*)[4096]>((STRUCT_GUILD*)0x88B5EE8);
+	g_pGuild = reinterpret_cast<STRUCT_GUILD(*)[4096]>((STRUCT_GUILD*)0x88B5EE8);
 	 
 }
 

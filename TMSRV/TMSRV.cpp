@@ -8,7 +8,12 @@
 #include <fcntl.h>
 bool TMSRV::initialize()
 {
-	 
+#pragma region console
+	AllocConsole();
+	SetConsoleTitle("DEBUG OPEN 756");
+	*stdout = *_fdopen(_open_osfhandle((intptr_t)GetStdHandle(STD_OUTPUT_HANDLE), _O_WRONLY), "w");
+#pragma endregion
+
 	if (!ConstantPatch::instance().initialize())
 		return false;
 

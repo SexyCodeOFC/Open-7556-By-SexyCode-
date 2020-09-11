@@ -564,8 +564,10 @@ const uint16_t _pDNTh = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
 struct pDNTh
 {
 	MSG_STANDARD Header; // 0 - 11
-	int donate;	
+	int donate;
 };
+
+
 const short  _p3BBh = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
 struct p3BBh
 {
@@ -750,7 +752,6 @@ struct BuyDonate
 		this->price = price;
 	}
 };
-
 struct RoyalBit
 {
 	uint16_t id;
@@ -771,7 +772,6 @@ struct RoyalBit
 		this->price = price;
 	}
 };
-
 const uint16_t _pFDEh = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
 struct pFDEh {
 	MSG_STANDARD Header; // 0 - 11
@@ -1159,13 +1159,10 @@ struct Boss
 
 };
 
-const uint16_t _p36Ch = (108 | FLAG_CLIENT2GAME | FLAG_GAME2CLIENT);
-struct p36Ch
+struct p3D1h
 {
 	_MSG;
-	STRUCT_POSITION Origin;
-	int32_t Speed; 
-	char Command[24];
-	STRUCT_POSITION Dest;
+
+	int aposta;
 };
 #endif // !PACKET_STRUCT_H

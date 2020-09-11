@@ -33,6 +33,8 @@ void Timer::ProcessSecTimer()
 
 	if (quarterMsCounter_ >= 4)
 	{
+		ClueOfRunesFactory::TimerControl();
+
 		quarterMsCounter_ = 0;
 		secCounter_++;
 
@@ -55,8 +57,15 @@ void Timer::ProcessSecTimer()
 #pragma region Chamada de um Segundo
 		if (!(secCounter_ % 1))
 		{
-#pragma region Chama Guerra de Torres
+
+
+
+#pragma region Chama Guerra de Torres FIM
 			CWarTower::ProcessEnd(timeinfo); 
+#pragma endregion
+
+#pragma region Chama Guerra de Torres INICIO
+			CWarTower::GuildProcess(timeinfo);
 #pragma endregion
 
 #pragma region Definição de tempo altar Noatun
@@ -64,7 +73,7 @@ void Timer::ProcessSecTimer()
 			{
 				if (when.tm_hour == 21 && when.tm_min == 06 && when.tm_sec == 05)
 				{
-					ServerInfo.CastleWar.AltarTime = 3900;
+					ServerInfo.CastleWar.AltarTime = 120;
 				}
 			}
 #pragma endregion
@@ -72,7 +81,28 @@ void Timer::ProcessSecTimer()
 #pragma region For chamando Players
 
 		 for (int client = 1; client < MAX_USER; client++)
-		 {  
+		 { 
+//
+//
+//#pragma region Verificações Mac
+//			  
+//			 auto mobinArea1 = Func::CheckMacUserInArea({ 2973, 1018 }, { 3453, 1655 }, { pUserData[conn].AccountInfo.MacAddress });
+//			   
+//			 if (mobinArea1.size() > 0)
+//			 {
+//				 goto fim;
+//			 fim:
+//				 Func::SendBackCity(client);
+//			 } 
+//
+//#pragma endregion
+#pragma region Atualiza bag para o uso de pergaminhos agua
+			 if (pMob[client].TargetX >= 1965 - 10 && pMob[client].TargetX <= 1965 + 10 && pMob[client].TargetY >= 1770 - 10 && pMob[client].TargetY <= 1770 + 10)
+			 {
+				 SendCarry(client);
+				 return;
+			 }
+#pragma endregion
 
 #pragma region AUTO VENDA
 			 auto userData = &pUserData[client];
@@ -81,7 +111,7 @@ void Timer::ProcessSecTimer()
 			 {
 				 userData->Ingame.PointStore++;
 
-				 if (userData->Ingame.PointStore > 5)//450 = 1hora 
+				 if (userData->Ingame.PointStore > 415)//
 				 {
 					 userData->Ingame.PointStore = 0;
 
@@ -90,18 +120,18 @@ void Timer::ProcessSecTimer()
 					 tm when;
 					 localtime_s(&when, &now);
 
-					 auto slot = Func::GetFirstSlot(client, SlotType::Inventory,0,0);
+					 auto slot = Func::GetFirstSlot(client, SlotType::Inventory, 0, 0);
 
 					 if (slot == -1)
 					 {
-						 SendClientMessage(client,"falta de  espaço no inventario");
+						 SendClientMessage(client, "falta de  espaço no inventario");
 					 }
 
 					 else
 					 {
 						 char tmp[256] = { 0, };
 						 strftime(tmp, 256, "!%d-%m-%y %H:%M:%S  Recebeu seu prêmio.", &when);
-						 STRUCT_ITEM moedas = { 413, 0, 0, 0 };
+						 STRUCT_ITEM moedas = { 5440, 0, 0, 0 };
 						 //STRUCT_ITEM moedas = { Event::Premio, 0, 0, 0, 0, 0, 0 };
 						 PutItem(client, &moedas);
 						 SendClientMessage(client, tmp);
@@ -109,7 +139,6 @@ void Timer::ProcessSecTimer()
 				 }
 			 }
 #pragma endregion
-
 
 #pragma region Chamada ALTAR WAR NOATUN
 				auto mob = GetMobFromIndex(client);
@@ -156,7 +185,7 @@ void Timer::ProcessSecTimer()
 						}
 					}
 					else
-						ServerInfo.CastleWar.AltarTime = 3900; // fim 1160 1790 // inicio 1024 1664
+						ServerInfo.CastleWar.AltarTime = 120; // fim 1160 1790 // inicio 1024 1664
 				}
 			}
 			

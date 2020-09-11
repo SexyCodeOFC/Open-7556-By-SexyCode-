@@ -1,17 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
-class Global
-{
-private:
-	Global() = delete;
-	~Global() = delete;
-	Global(const Global&) = delete;
-	Global& operator=(const Global&) = delete;
-public:
-	 
-	static STRUCT_GUILD				guild[1000];
-	 
-};
+
 extern UserData pUserData[MAX_USER];
 extern CMob* pMob;
 extern CUser* pUser;
@@ -30,7 +19,8 @@ extern int wtGuildKiller;
 extern int wtState;
 extern STRUCT_MILEAGESTORE pMileageStore[500];
 extern int g_MileageCountLine;
-extern char(*g_pFormation)[12][2];  
+extern char(*g_pFormation)[12][2]; 
+extern STRUCT_GUILD(*g_pGuild)[4096]; 
 extern ServerStatus ServerInfo;
 extern int NumberMoedas;
 extern Moeda coins[500];

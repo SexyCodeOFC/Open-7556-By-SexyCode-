@@ -20,6 +20,7 @@ public:
 	static int ExpControl(int conn, int Exp);
 	static bool __stdcall ProcessClientMessage(int32_t conn, char* pMsg);
 	static bool __stdcall MobKilledEvent(int32_t generID, int32_t killed, int32_t killer);
+	static bool __stdcall onPlayerMovement(const int32_t client, MSG_Action_7556* const packet);
 	static void __stdcall FixBuyItem(int conn, MSG_Buy* m);
 	static BYTE* SendPacket(BYTE *pBuffer, UINT32* socketId, UINT32 packetSize);
 	static bool __stdcall AddJoinableItens(STRUCT_ITEM* item);
@@ -29,6 +30,7 @@ public:
 	static void __stdcall CloseUser(int32_t client); 
 	static bool __stdcall OnNpcClick(int32_t client, p28Bh* packet);
 
+	static int __stdcall teleportPosition(uint32_t client, short* ptrX, short* ptrY, uint32_t* Unknown);
 	static char* __stdcall ReadMessage(CPSock* thisPtr, int* ErrorCode, int* ErrorType);
 	static BOOL __stdcall AddMessage(CPSock* thisPtr, char* pMsg, int Size);
 

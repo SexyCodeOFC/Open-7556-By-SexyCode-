@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <OutDir>C:\KNIGHT SERVER\release\Server2 - Copia\TMSRV\run</OutDir>
+    <OutDir>..\..\..\..\Desktop\RELEASE\TMSRV\run</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>C:\@ALASTAR</OutDir>
@@ -56,7 +56,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_TMSRV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -86,20 +86,33 @@
     <ClInclude Include="..\include\random.h" />
     <ClInclude Include="..\include\singleton.h" />
     <ClInclude Include="..\include\structs.h" />
+    <ClInclude Include="Amon.h" />
+    <ClInclude Include="ClueOfRunes.h" />
+    <ClInclude Include="ClueOfRunesFactory.h" />
+    <ClInclude Include="ClueOfRunesMgr.h" />
     <ClInclude Include="ConstantPatch.h" />
     <ClInclude Include="CWarTower.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="HookImpl.h" />
     <ClInclude Include="HookPatch.h" />
+    <ClInclude Include="Labirinto.h" />
     <ClInclude Include="Language.h" />
+    <ClInclude Include="Lich.h" />
+    <ClInclude Include="Lobo.h" />
     <ClInclude Include="ProcessClientMessage.h" />
     <ClInclude Include="ProcessSecMinTimer.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Teleportador.h" />
     <ClInclude Include="TMSRV.h" />
+    <ClInclude Include="Torre.h" />
+    <ClInclude Include="Zakum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddMessage.cpp" />
+    <ClCompile Include="Amon.cpp" />
+    <ClCompile Include="ClueOfRunesFactory.cpp" />
+    <ClCompile Include="ClueOfRunesMgr.cpp" />
     <ClCompile Include="ConstantPatch.cpp" />
     <ClCompile Include="CWarTower.cpp" />
     <ClCompile Include="DllMain.cpp" />
@@ -107,11 +120,16 @@
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="HookImpl.cpp" />
     <ClCompile Include="HookPatch.cpp" />
+    <ClCompile Include="Labirinto.cpp" />
+    <ClCompile Include="Lich.cpp" />
+    <ClCompile Include="Lobo.cpp" />
     <ClCompile Include="ProcessSecMinTimer.cpp" />
+    <ClCompile Include="Teleportador.cpp" />
+    <ClCompile Include="Torre.cpp" />
+    <ClCompile Include="Zakum.cpp" />
     <ClCompile Include="_MSG_AcceptParty.cpp" />
     <ClCompile Include="_MSG_AccountLogin.cpp" />
     <ClCompile Include="_MSG_Action.cpp" />
-    <ClCompile Include="_MSG_Alquimista_Real.cpp" />
     <ClCompile Include="_MSG_Attack.cpp" />
     <ClCompile Include="ProcessClientMessage.cpp" />
     <ClCompile Include="ProcessDBMessage.cpp" />
@@ -131,6 +149,7 @@
     <ClCompile Include="_MSG_GetItem.cpp" />
     <ClCompile Include="_MSG_GriffinMaster.cpp" />
     <ClCompile Include="_MSG_MessageWhisper.cpp" />
+    <ClCompile Include="_MSG_OnPaymentZakun.cpp" />
     <ClCompile Include="_MSG_Quest.cpp" />
     <ClCompile Include="_MSG_TradingItem.cpp" />
     <ClCompile Include="_MSG_UpdateItem.cpp" />

@@ -46,6 +46,33 @@
     <Filter Include="TMSRV\War\Tower">
       <UniqueIdentifier>{72e558e8-ec31-43fe-aa56-412df39369cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas">
+      <UniqueIdentifier>{9d45606b-8c24-4911-b77e-f4adc5beb1d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PistaRunasH">
+      <UniqueIdentifier>{8f306ba0-3b8c-4bc1-96ac-44137e623ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 6">
+      <UniqueIdentifier>{1c9cc740-4686-4665-8b94-3ccece023fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 5">
+      <UniqueIdentifier>{23acaec8-f2ce-4846-9173-336b282fd1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 4">
+      <UniqueIdentifier>{73288203-f003-4d82-8610-b4a1b529eb4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 3">
+      <UniqueIdentifier>{42d0385f-ce74-4e8b-ba7d-61598705ee27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 2">
+      <UniqueIdentifier>{d5d2f800-bb01-4371-90c0-a2a397eff4df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 1">
+      <UniqueIdentifier>{d22b796a-8000-4a54-a1d8-578002fc7b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TMSRV\MSG\PistaRunas\Pista + 0">
+      <UniqueIdentifier>{08324ce1-d346-4cf1-9013-37afc41fcaf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\hook.h">
@@ -97,6 +124,36 @@
     </ClInclude>
     <ClInclude Include="CWarTower.h">
       <Filter>TMSRV\War\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="ClueOfRunesMgr.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="ClueOfRunes.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="ClueOfRunesFactory.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Lich.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Torre.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Amon.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobo.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Labirinto.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleportador.h">
+      <Filter>Header Files\PistaRunasH</Filter>
+    </ClInclude>
+    <ClInclude Include="Zakum.h">
+      <Filter>Header Files\PistaRunasH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +247,34 @@
     <ClCompile Include="_MSG_CombineItemOdin.cpp">
       <Filter>TMSRV\MSG\NPC</Filter>
     </ClCompile>
-    <ClCompile Include="_MSG_Alquimista_Real.cpp">
+    <ClCompile Include="ClueOfRunesMgr.cpp">
+      <Filter>TMSRV\MSG\PistaRunas</Filter>
+    </ClCompile>
+    <ClCompile Include="ClueOfRunesFactory.cpp">
+      <Filter>TMSRV\MSG\PistaRunas</Filter>
+    </ClCompile>
+    <ClCompile Include="Lich.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 0</Filter>
+    </ClCompile>
+    <ClCompile Include="Torre.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 1</Filter>
+    </ClCompile>
+    <ClCompile Include="Amon.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 2</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobo.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 3</Filter>
+    </ClCompile>
+    <ClCompile Include="Labirinto.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 4</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleportador.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 5</Filter>
+    </ClCompile>
+    <ClCompile Include="Zakum.cpp">
+      <Filter>TMSRV\MSG\PistaRunas\Pista + 6</Filter>
+    </ClCompile>
+    <ClCompile Include="_MSG_OnPaymentZakun.cpp">
       <Filter>TMSRV\MSG\NPC</Filter>
     </ClCompile>
   </ItemGroup>

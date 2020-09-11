@@ -140,4 +140,5 @@ __forceinline short GetCPosX() {
 __forceinline short GetCPosY() {
 	return (short)(*(float*)((*(int*)((char*)(*(int**)0x6BDAF0) + 76)) + 44));
 } 
+extern bool MacroPega; // Desativado Por Padrão
 #endif // !FUNCTIONS_H

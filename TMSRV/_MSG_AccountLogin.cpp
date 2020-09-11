@@ -4,6 +4,11 @@ bool Exec_MSG_AccountLogin(int conn, char* pMsg)
 {
 	MSG_AccountLogin* m = (MSG_AccountLogin*)pMsg;
 
+
+	m->AccountPassword[11] = '\0';
+	m->AccountName[11] = '\0';
+	m->MacAddress[17] = '\0';
+
 	auto userData = &pUserData[conn];
 	char Mac[18];
 	memset(Mac, 0, sizeof(Mac));
@@ -18,8 +23,8 @@ bool Exec_MSG_AccountLogin(int conn, char* pMsg)
 	{
 		Func::LoadAccount(conn, m->AccountName);
 
-		memset(pUserData[conn].Ingame.MacAddress, 0, 18);
-		strncpy(pUserData[conn].Ingame.MacAddress, Mac, 18);
+		memset(pUserData[conn].AccountInfo.MacAddress, 0, 18);
+		strncpy(pUserData[conn].AccountInfo.MacAddress, Mac, 18);
 		strncpy(pUserData[conn].AccountInfo.LastIP, m->IP, 16);
 
 		Func::SaveAccount(conn, m->AccountName);
@@ -38,7 +43,7 @@ bool Exec_MSG_AccountLogin(int conn, char* pMsg)
 
 	Func::LoadAccount(conn, m->AccountName);
 
-	int macBan = Func::ReadMacList(pUserData[conn].Ingame.MacAddress);
+	int macBan = Func::ReadMacList(pUserData[conn].AccountInfo.MacAddress);
 
 	if (macBan == TRUE)
 	{
@@ -70,8 +75,7 @@ bool Exec_MSG_AccountLogin(int conn, char* pMsg)
 			SendClientMessage(conn, temp);
 			return false;
 		}
-	}
-  
+	} 
 
 	return true;
 }

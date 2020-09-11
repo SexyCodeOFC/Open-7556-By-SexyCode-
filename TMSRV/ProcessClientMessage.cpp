@@ -70,11 +70,10 @@ bool HookImpl::ProcessClientMessage(int32_t conn, char* pMsg)
 	case 0x398:
 		rt = Exec_MSG_ActionLojinha(conn, pMsg);
 		break;  
-	case 0x2C3:
-		rt = Exec_MSG_Alquimista_Real(conn, pMsg);
+	case 0x3D1:
+		rt = onPaymentGold(conn, pMsg);
 		break;
-	}
-
+	} 
 
 	return rt;
 }

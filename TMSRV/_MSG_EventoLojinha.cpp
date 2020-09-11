@@ -7,7 +7,7 @@ bool Exec_MSG_OpenLojinha(int conn, char* pMsg)
 	auto mobStore = Func::getPlayerLoja({ packet->ID }, { pUserData[conn].Ingame.MacAddress });
 
 
-	if (mobStore.size() == 0)
+	if (mobStore.size() <= 500)
 	{
 		pUserData[conn].Ingame.autoStore = true;
 		time_t now;
@@ -15,15 +15,18 @@ bool Exec_MSG_OpenLojinha(int conn, char* pMsg)
 		tm when;
 		localtime_s(&when, &now);
 
-		char tmp[256] = { 0, }; 
-		strftime(tmp, 256, "Sistema de Auto Venda Ativado.", &when);
+		char tmp[256] = { 0, };
+		strftime(tmp, 256, "!%d-%m-%y %H:%M:%S Sistema de Auto Venda Ativado.", &when);
 		SendClientMessage(conn, tmp);
 	}
 	return true;
 }
 
+
+
+
 bool Exec_MSG_ClosedLojinha(int conn, char* pMsg)
-{
+{ 
 	auto userData = &pUserData[conn];
 	userData->Ingame.autoStore = false;
 	userData->Ingame.PointStore = 0;
@@ -53,7 +56,7 @@ bool Exec_MSG_ActionLojinha(int conn, char* pMsg)
 		pUserData[conn].AccountInfo.Mileage += p->Gold; // cash de quem vendeu
 		pMob[conn].MOB.Coin += p->Gold; // gold do inventario de quem comprou
 		pUser[conn].Coin -= p->Gold; // gold do bau de quem vendeu
-		SendClientMessage(p->Index, Func::strFmt("!%s comprou o um Item por %d Donate Coins", pMob[conn].MOB.MobName, p->Gold));
+		SendClientMessage(p->Index, Func::strFmt("!%s comprou o um Item por %d Donate", pMob[conn].MOB.MobName, p->Gold));
 	}
 	*/
 	return true;

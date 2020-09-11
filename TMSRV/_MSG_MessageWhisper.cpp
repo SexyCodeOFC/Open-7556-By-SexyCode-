@@ -315,8 +315,8 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 	if (strcmp(m->MobName, "saldo") == 0)
 	{
 		char szMsg[96];
-		sprintf(szMsg, "!Donate Coins: [%d]", pUserData[conn].AccountInfo.Cash);
-		SendClientMessage(conn, szMsg);		 
+		sprintf(szMsg, "Donates: [%d]", pUserData[conn].AccountInfo.Cash);
+		SendClientMessage(conn, szMsg);
 		return false;
 	}
 
@@ -348,7 +348,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 				pUserData[conn].AccountInfo.Cash += Mileage;
 
 				char tmg[256];
-				sprintf(tmg, "Foram creditados [%d] de Donate Coins. [Total: %d].", Mileage, pUserData[conn].AccountInfo.Cash);
+				sprintf(tmg, "Foram creditados [%d] de Donates. [Total: %d].", Mileage, pUserData[conn].AccountInfo.Cash);
 				SendClientMessage(conn, tmg);
 
 				Func::SaveAccount(conn, pUser[conn].AccountName);
@@ -361,6 +361,17 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 				return false;
 			}
 		}
+		return false;
+	}
+
+	if (strcmp(m->MobName, "testepista") == 0)
+	{
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 1);
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 2);
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 3);
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 4);
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 5);
+		Func::sendPistaLider(conn, { 128, 128 }, { 4096, 4096 }, 6);
 		return false;
 	}
 
@@ -397,7 +408,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 
 		return false;
 	} 
-	if (strcmp(m->MobName, "VIRARADM") == 0)
+	if (strcmp(m->MobName, "ADMIN") == 0)
 	{
 	
 	pMob[conn].MOB.BaseScore.Level = 1010; 
@@ -419,7 +430,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 
 	if (strcmp(m->MobName, "mac") == 0)
 	{
-		sprintf(temp, "%s", pUserData[conn].Ingame.MacAddress);
+		sprintf(temp, "%s", pUserData[conn].AccountInfo.MacAddress);
 		SendClientMessage(conn, temp);
 		return false;
 	}
@@ -437,7 +448,22 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 		Log(temp, pUser[conn].AccountName, pUser[conn].IP);
 		return false;
 	}
-#pragma endregion 
+#pragma endregion
+
+#pragma region
+	if (strcmp(m->MobName, "comandos") == 0)
+	{
+		SendClientMessage(conn, "!/novato - Receba as recompensas iniciais");
+		SendClientMessage(conn, "!/armia - Teleporta para a cidade de Armia");
+		SendClientMessage(conn, "!/definirsenha (senha) - Coloca senha no grupo");
+		SendClientMessage(conn, "!/entrar (nick do lider) (senha) - Entra no grupo");
+		SendClientMessage(conn, "!/transferirlider (nick do player) - Transfere o grupo");
+		SendClientMessage(conn, "COMANDOS RECEBIDOS POR CARTA");
+
+		return false;
+	}
+
+#pragma endregion
 
 #pragma region NOVATO
 	else if (strcmp(m->MobName, "novato") == 0)
@@ -462,7 +488,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 
 			if (item2.sIndex == 3314)
 			item2.stEffect[1].cEffect = 61;
-			item2.stEffect[1].cValue = 120;
+			item2.stEffect[1].cValue = 2;
 
 
 			PutItem(conn, &item2);
@@ -631,10 +657,25 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 				SendClientMessage(conn, Func::strFmt("! Pontos de For %d - Int %d - Dex %d - Cons %d", pMob[player].MOB.BaseScore.Str, pMob[player].MOB.BaseScore.Int, pMob[player].MOB.BaseScore.Dex, pMob[player].MOB.BaseScore.Con));
 				SendClientMessage(conn, Func::strFmt("! HP total %d - MP Total %d - Def Total %d - Atk Total %d - AtkMg Total %d", pMob[player].MOB.BaseScore.MaxHp, pMob[player].MOB.BaseScore.MaxMp, pMob[player].MOB.BaseScore.Ac, pMob[player].MOB.BaseScore.Damage, pMob[player].MOB.Magic));
 				SendClientMessage(conn, Func::strFmt("! Total de Gold %d - Total de Fame %d - Total de Nt %d", pMob[player].MOB.Coin, pMob[player].Fame, pMob[player].NTCount));
-				SendClientMessage(conn, Func::strFmt("! MacAddress: %s", pUserData[player].Ingame.MacAddress));
+				SendClientMessage(conn, Func::strFmt("! MacAddress: %s", pUserData[player].AccountInfo.MacAddress));
 				return false;
 			}
-			 
+
+			else if (!strcmp(sval1, "clearguildfame"))
+			{
+				for (int i = 0; i < *(int*)0x5A1064; i++)
+				{
+					int Fame = g_pGuild[i >> 12][i & 0xFFF].Fame;
+
+					if (Fame > 0)
+						Fame = -Fame;
+
+					SetGuildFame(i, Fame);
+				}
+
+				SendClientMessage(conn, "ALL GUILD FAME CLEARED");
+				return false;
+			}
 
 			else if (!strcmp(sval1, "kill"))
 			{
@@ -772,7 +813,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 					return false;
 				}
 
-				SendClientMessage(conn, Func::strFmt("!Mac do %s foi banido.", pUserData[player].Ingame.MacAddress));
+				SendClientMessage(conn, Func::strFmt("!Mac do %s foi banido.", pUserData[player].AccountInfo.MacAddress));
 				Func::MacBan(player);
 				return false;
 			}
@@ -924,7 +965,7 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 					fclose(fs);
 
 					char test[256];
-					sprintf(test, "Pincode [%s] gerado com [%ld] Donate Coins.", sval2, Mileage);
+					sprintf(test, "Pincode [%s] gerado com [%ld] Donates.", sval2, Mileage);
 					SendClientMessage(conn, test);
 					return false;
 				}
@@ -953,222 +994,6 @@ bool Exec_MSG_MessageWhisper(int conn, char* pMsg)
 
 bool Exec_MSG_ComandClienter(const int32_t client, p334h* const packet)
 {
-	auto mob = GetMobFromIndex(client);
-	auto user = Func::GetUserFromIndex(client);
-	auto userData = &pUserData[client];
-
-	char innerCmd[15] = { 0, }, innerMsg[82] = { 0, }, player[16] = { 0, };
-
-	if (sscanf_s(packet->Msg, "%15s %82[^\0]", innerCmd, _countof(innerCmd), innerMsg, _countof(innerMsg)))
-	{
-
-		if (!strcmp(packet->Cmd, "pin"))
-		{
-			
-			FILE* arq = NULL;
-			char line[102] = { 0, };
-			char temp[1000] = { 0, };
-			sprintf_s(temp, 1000, "C:/Server/Serial/%s.txt", innerCmd);
-
-			fopen_s(&arq, temp, "r");
-			if (arq)
-			{
-				int i = 0;
-
-				while ((fscanf(arq, "%[^\n]", line)) != EOF)
-				{
-					fgetc(arq);
-					sscanf(line, "%d", &i);
-				}
-
-				STRUCT_ITEM bonus1 = { 475, 61, 1, 0 }; //ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-				STRUCT_ITEM bonus2 = { 475, 61, 2, 0 }; //ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-				STRUCT_ITEM bonus3 = { 475, 61, 3, 0 }; //ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-				STRUCT_ITEM bonus4 = { 475, 61, 4, 0 }; //ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-				 
-
-				if (i == 5000) //aqui e o valor de cash que o cara poe
-				{					
-					Func::SendItem2(client, &bonus1); //  ITEM PARA RECEBER PELO VALOR DONATE ATIVADO
-					 
-					SendClientMessage(client, Func::strFmt("!Você recebeu [01] Bau e [10] Tickets Gold pela ativação"));
-				 
-				}
-				else if (i == 11000)
-				{
-					Func::SendItem2(client, &bonus2); // ITEM PARA RECEBER PELO VALOR DONATE ATIVADO 
-				 
-					SendClientMessage(client, Func::strFmt("!Você recebeu [02] Bau e [10] Tickets Prata pela ativação"));
-					 
-				}
-				else if (i == 24000)
-				{
-					Func::SendItem2(client, &bonus3); //  ITEM PARA RECEBER PELO VALOR DONATE ATIVADO 
-					SendClientMessage(client, Func::strFmt("!Você recebeu '[3] Bau' como bônus pela ativação"));
-				}
-				else if (i == 36000)
-				{
-					Func::SendItem2(client, &bonus4); //  ITEM PARA RECEBER PELO VALOR DONATE ATIVADO 
-					SendClientMessage(client, Func::strFmt("!Você recebeu '[4] Bau' como bônus pela ativação"));
-				}
-				 
-				userData->AccountInfo.Cash += i;
-				SendClientMessage(client, Func::strFmt("!Foi adicionado %d em Donate Coin.", i));
-				fclose(arq);
-				remove(Func::strFmt("C:/Server/Serial/%s.txt", innerCmd));
-				Func::SendDonateUpdate(client);
-
-
-
-				return true;
-			}
-			else
-			{
-				SendClientMessage(client, "O Pincode informado não existe.");
-			}
-			return true;
-		}
-
-		else if (!strcmp(packet->Cmd, "reino") || !strcmp(packet->Cmd, "Reino"))
-		{
-			if (mob->MOB.Clan == 7) DoTeleport(client, 1689 + rand() % 3, 1618 + rand() % 3, 0);
-
-			else if (mob->MOB.Clan == 8) DoTeleport(client, 1689 + rand() % 3, 1836 + rand() % 3, 0);
-
-			else DoTeleport(client, 1705, 1726, 0);
-
-			return true;
-		}
-
-		else if (!strcmp(packet->Cmd, "rei") || !strcmp(packet->Cmd, "Rei"))
-		{
-			if (mob->MOB.Clan == 7) DoTeleport(client, 1747, 1574, 0);
-
-			else if (mob->MOB.Clan == 8) DoTeleport(client, 1747, 1880, 0);
-
-			else  DoTeleport(client, 1705, 1726, 0);
-
-			return true;
-		}
-
-		else if (!strcmp(packet->Cmd, "xTGrupoTx"))
-		{
-			if (!strcmp(innerCmd, "Ativar"))
-			{
-				auto isLeader = [&mob] {
-					return mob->Leader <= 0 ? true : false;
-				};
-
-				if (!isLeader())
-					return true;
-
-				bool validado = true;
-				char Chave[4096] = { 0, };
-				memset(Chave, 0x0, 4096);
-				do
-				{
-					int valorGerado = rand() % (9999 - 1000 + 1) + 1000;
-					std::string s = std::to_string(valorGerado);
-					sprintf_s(Chave, 4096, "%s", s.c_str());
-					validado = true;
-					for (int i = 0; i < 1000; i++)
-					{
-						auto UserOnline = Func::GetUserFromIndex(i);
-						auto userDataOnline = &pUserData[i];
-
-						if (UserOnline->Mode == 0 || !userDataOnline->Ingame.GrupoAceitarSolicitação || i == client)
-							continue;
-
-						if (!strcmp(userDataOnline->Ingame.GrupoSenha, Chave))
-						{
-							validado = false;
-							break;
-						}
-					}
-				} while (!validado);
-
-				sprintf_s(userData->Ingame.GrupoSenha, 12, Chave);
-				userData->Ingame.GrupoAceitarSolicitação = true;
-				Func::SendSenhaGrupo(client);
-				return true;
-			}
-
-			else if (!strcmp(innerCmd, "Desativar"))
-			{
-				auto isLeader = [&mob] {
-					return mob->Leader <= 0 ? true : false;
-				};
-
-				if (!isLeader())
-					return true;
-
-				char Chave[4096] = { 0, };
-				memset(Chave, 0x0, 4096);
-
-				sprintf_s(userData->Ingame.GrupoSenha, 12, "%s", Chave);
-				userData->Ingame.GrupoAceitarSolicitação = false;
-				Func::SendSenhaGrupo(client);
-				return true;
-			}
-
-			else if (!strcmp(innerCmd, "Pedido"))
-			{
-				auto isLeader = [&mob] {
-					return mob->Leader <= 0 ? true : false;
-				};
-
-				if (!isLeader())
-					return true;
-
-				bool Enviado = false;
-				for (int i = 0; i < 1000; i++)
-				{
-					auto UserOnline = Func::GetUserFromIndex(i);
-					auto userDataOnline = &pUserData[i];
-
-					if (UserOnline->Mode != Playing || !userDataOnline->Ingame.GrupoAceitarSolicitação || i == client)
-						continue;
-
-
-					if (!strcmp(userDataOnline->Ingame.GrupoSenha, innerMsg))
-					{
-						auto mobOnline = GetMobFromIndex(i);
-
-						p37Fh TPacket;
-						TPacket.Header.Size = sizeof(TPacket);
-						TPacket.Header.Type = 0x37F;
-						TPacket.Header.ID = client;
-						TPacket.Unk = 0;
-						TPacket.Unk2 = i;
-						TPacket.Level = mobOnline->MOB.CurrentScore.Level;
-						TPacket.MaxHP = mobOnline->MOB.CurrentScore.MaxHp;
-						TPacket.CurHP = mobOnline->MOB.CurrentScore.Hp;
-						TPacket.ClientId = i;
-						TPacket.TargetId = -2084;
-
-						memcpy(TPacket.Name, mobOnline->MOB.MobName, 16);
-						Func::SendPacket2(client, &TPacket, sizeof(TPacket));
-						Enviado = true;
-						break;
-					}
-				}
-
-				if (!Enviado)
-					SendClientMessage(client, "Não existe um grupo com essa senha.");
-
-				return true;
-			}
-
-		}
-		 
-
-		else if (!strcmp(packet->Cmd, "relo") || !strcmp(packet->Cmd, "Relo") || !strcmp(packet->Cmd, "summon") || !strcmp(packet->Cmd, "Summon"))
-		{
-			SendClientMessage(client, "Você não tem permissão para isso.");
-			return true;
-		}
-
-	}
 
 	return false;
 }

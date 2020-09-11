@@ -47,7 +47,7 @@ bool Exec_MSG_Buy(int conn, char* pMsg)
 
 				if (pUserData[conn].AccountInfo.Cash < PriceItem)
 				{
-					sprintf(temp, "Você não possui Doante Coins suficiente.");
+					sprintf(temp, "Você não possui Donates suficiente.");
 					SendClientMessage(conn, temp);
 					return false;
 				}
@@ -68,12 +68,13 @@ bool Exec_MSG_Buy(int conn, char* pMsg)
 				{
 					pMileageStore[i].Store--;
 					pUserData[conn].AccountInfo.Cash -= PriceItem;
-					SendClientMessage(conn, Func::strFmt("Compra realizada com sucesso, Donate Coins atual é: [%d]", pUserData[conn].AccountInfo.Cash));
+					SendClientMessage(conn, Func::strFmt("Compra realizada com sucesso, Donate atual é: [%d]", pUserData[conn].AccountInfo.Cash));
 					Func::SaveAccount(conn, pUser[conn].AccountName);
-
-					char szLog[128];
-					sprintf(szLog, "MSG_BUY ITEM DONATECOINS SUCCESS %s:%d", g_pItemList[ItemMob->sIndex].Name, PriceItem);
-					Log(szLog, pUser[conn].AccountName, pUser[conn].IP);
+					 
+					sprintf(temp, "[%s] Comprou o item %s por %d", pMob[conn].MOB.MobName, g_pItemList[ItemMob->sIndex].Name, PriceItem);
+					Log(temp, "Log_Donate", 0);
+					
+					
 					Func::SendDonateUpdate(conn);
 					return false;
 				}

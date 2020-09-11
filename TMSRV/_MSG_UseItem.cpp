@@ -1,5 +1,5 @@
 #include "stdafx.h"
- 
+
 bool Exec_MSG_UseItem(int conn, char* pMsg)
 {
 	MSG_UseItem* m = (MSG_UseItem*)pMsg;
@@ -26,7 +26,7 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 	if (pMob[conn].MOB.CurrentScore.Hp == 0)
 	{
 		SendHpMode(conn);
-		CloseUser(conn);
+		//CloseUser(conn);
 
 		if (m->SourType == ITEM_PLACE_CARRY)
 			SendItem(conn, m->SourType, m->SourPos, &pMob[conn].MOB.Carry[m->SourPos]); 
@@ -153,52 +153,13 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 #pragma endregion 
 
 
-#pragma region Poeira de Fada
-	if (Vol == 7)//Poeira de Fada
-	{		 
-		if (Func::GetPlayerClass(conn) == Mortal)
-		{
-			SendClientMessage(conn, "+ + + 4.005.000.000 EXP + + +");
-			pMob[conn].MOB.Exp = 4200000000;
-			pMob[conn].MOB.BaseScore.Level = 399;
-			pMob[conn].MOB.CurrentScore.Level = 399;
-			SendEmotion(conn, 0, 0xE);
-			Func::GetCurrentScore(conn);
-			SendScore(conn);
-			memset(&pMob[conn].MOB.Carry[m->SourPos], 0, sizeof(STRUCT_ITEM));
-			SendItem(conn, ITEM_PLACE_CARRY, m->SourPos, &pMob[conn].MOB.Carry[m->SourPos]);
-		}
-		if (Func::GetPlayerClass(conn) == God)
-		{
-			SendClientMessage(conn, "+ + + 4.005.000.000 EXP + + +");
-			pMob[conn].MOB.Exp = 4005000000;
-			pMob[conn].MOB.BaseScore.Level = 399;
-			pMob[conn].MOB.CurrentScore.Level = 399;
-			SendEmotion(conn, 0, 0xE);
-			Func::GetCurrentScore(conn);
-			SendScore(conn);
-			memset(&pMob[conn].MOB.Carry[m->SourPos], 0, sizeof(STRUCT_ITEM));
-			SendItem(conn, ITEM_PLACE_CARRY, m->SourPos, &pMob[conn].MOB.Carry[m->SourPos]);
-		}
-		if (Func::GetPlayerClass(conn) > God)
-		{
-			SendClientMessage(conn, "Somente para Mortai e Arch");			 
-			Func::GetCurrentScore(conn);
-			SendScore(conn);
-			memset(&pMob[conn].MOB.Carry[m->SourPos], 0, sizeof(STRUCT_ITEM));
-			SendItem(conn, ITEM_PLACE_CARRY, m->SourPos, &pMob[conn].MOB.Carry[m->SourPos]);
-		}
-		return false;
-	}
-#pragma endregion
-
 #pragma region GameRoom Ticket
 	if (item->sIndex == 4111)
 	{
-		auto mobinArea = Func::CheckMacUserInArea({ 3604, 3604 }, { 3691, 3690 }, { pUserData[conn].Ingame.MacAddress });
+		//auto mobinArea = Func::CheckMacUserInArea({ 3604, 3604 }, { 3691, 3690 }, { pUserData[conn].AccountInfo.MacAddress });
 
-		if (mobinArea.size() > 0)
-			goto fim;
+		//if (mobinArea.size() > 0)
+		//	goto fim;
 
 		if (Func::GetPlayerClass(conn) == Mortal || pMob[conn].MOB.CurrentScore.Level > 999)
 		{
@@ -207,21 +168,21 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 			DoTeleport(conn, 3655, 3655, 0);
 			return false;
 		}
-	fim:
+	/*fim:
 		SendClientMessage(conn, "Entrada não permitida. (Apenas uma conta)");
 		SendItem(conn, m->SourType, m->SourPos, item);
-		return false;
+		return false;*/
 	}
 
 	// 3732 3563 - 3819 3476
 	if (item->sIndex == 4112)
 	{
-		auto mobinArea = Func::CheckMacUserInArea({ 3732, 3476 }, { 3819, 3563 }, { pUserData[conn].Ingame.MacAddress });
+		//auto mobinArea = Func::CheckMacUserInArea({ 3732, 3476 }, { 3819, 3563 }, { pUserData[conn].AccountInfo.MacAddress });
 
-		if (mobinArea.size() > 0)
-			goto ending;
+		//if (mobinArea.size() > 0)
+		//	goto ending;
 
-		if (Func::GetPlayerClass(conn) == God || pMob[conn].MOB.CurrentScore.Level > 999)
+		if (Func::GetPlayerClass(conn) == Mortal || pMob[conn].MOB.CurrentScore.Level > 999)
 		{
 			Func::AmountMinus(item);
 			SendItem(conn, m->SourType, m->SourPos, item);
@@ -229,30 +190,30 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 			return false;
 		}
 
-	ending:
+	/*ending:
 		SendClientMessage(conn, "Entrada não permitida. (Apenas uma conta)");
 		SendItem(conn, m->SourType, m->SourPos, item);
-		return false;
+		return false;*/
 	}
 	// 3860 3690 - 3946 3604
 	if (item->sIndex == 4113)
 	{
-		auto mobinArea = Func::CheckMacUserInArea({ 3860, 3604 }, { 3946, 3690 }, { pUserData[conn].Ingame.MacAddress });
+		//auto mobinArea = Func::CheckMacUserInArea({ 3860, 3604 }, { 3946, 3690 }, { pUserData[conn].AccountInfo.MacAddress });
 
-		if (mobinArea.size() > 0)
-			goto fim2;
+		//if (mobinArea.size() > 0)
+		//	goto fim2;
 
-		if (Func::GetPlayerClass(conn) == Celestial || pMob[conn].MOB.CurrentScore.Level > 999)
+		if (Func::GetPlayerClass(conn) == God || pMob[conn].MOB.CurrentScore.Level > 999)
 		{
 			Func::AmountMinus(item);
 			SendItem(conn, m->SourType, m->SourPos, item);
 			DoTeleport(conn, 3895, 3639, 0);
 			return false;
 		}
-	fim2:
+	/*fim2:
 		SendClientMessage(conn, "Entrada não permitida. (Apenas uma conta)");
 		SendItem(conn, m->SourType, m->SourPos, item);
-		return false;
+		return false;*/
 	}
 #pragma endregion
 
@@ -379,6 +340,9 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 #pragma region Removedor de Tintura
 	if (Vol == 186)
 	{
+		try 
+		{
+
 		STRUCT_ITEM *dest = GetItemPointer(&pMob[conn].MOB, pUser[conn].Cargo, m->DestType, m->DestPos);
 
 		if (dest == NULL)
@@ -460,7 +424,11 @@ bool Exec_MSG_UseItem(int conn, char* pMsg)
 
 		SendItem(conn, m->DestType, m->DestPos, dest);
 		SendEmotion(conn, 14, 3);
+		}
+		catch (...)
+		{
 
+		}
 		return false;
 	}
 #pragma endregion

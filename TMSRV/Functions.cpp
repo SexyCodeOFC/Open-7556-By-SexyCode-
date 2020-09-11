@@ -33,11 +33,6 @@ bool Func::ClearAmountItem(uint16_t client, uint16_t item, uint16_t quant)
 	return true;
 }
 
-void Func::CloseWindows(int clientId)
-{
-	callCdecl(0x4015FF, void, int, int, int, int)(clientId, 0x7530, 0x3A7, 0);
-}
-
 CUser* Func::GetUserFromIndex(int conn)
 {
 	if (conn < 0 || conn > MAX_USER)
@@ -46,30 +41,6 @@ CUser* Func::GetUserFromIndex(int conn)
 	return &pUser[conn];
 }
 
-int Func::ReturnAmount(STRUCT_ITEM* item)
-{
-	int totalAmount = 0;
-	bool hasAmount = false;
-
-	for (int a = 0; a < 3; a++)
-	{
-		if (item->stEffect[a].cEffect == EF_AMOUNT)
-		{
-			totalAmount += item->stEffect[a].cValue;
-			hasAmount = true;
-		}
-	}
-
-	if (!hasAmount)
-	{
-		if (item->stEffect[0].cEffect != EF_AMOUNT &&
-			item->stEffect[1].cEffect != EF_AMOUNT &&
-			item->stEffect[2].cEffect != EF_AMOUNT)
-			totalAmount++;
-	}
-
-	return totalAmount;
-}
 int32_t Func::CheckGetLevel(int32_t client)
 {
 	__asm
@@ -96,7 +67,7 @@ void Func::AmountMinus(STRUCT_ITEM* item)
 {
 	auto amount = BASE_GetItemAmount(item);
 
-	if (amount > 0)
+	if (amount > 1)
 	{
 		BASE_SetItemAmount(item, amount - 1);
 		return;
@@ -303,7 +274,7 @@ void Func::MacBan(uint16_t conn)
 
 	char update[20];
 	memset(update, 0, 20);
-	sprintf(update, "%s \n", pUserData[conn].Ingame.MacAddress);
+	sprintf(update, "%s \n", pUserData[conn].AccountInfo.MacAddress);
 	fputs(update, Arquivo);
 	fclose(Arquivo);
 
@@ -341,12 +312,12 @@ void Func::SendChatColor(const uint16_t conn, char* Msg, int Color, const uint16
 bool Func::ReadMileageListItem()
 {
 	FILE* arq = NULL;
-	fopen_s(&arq, "./DataBase/Mileage.txt", "r");
+	fopen_s(&arq, "./Mileage.txt", "r");
 	memset(&pMileageStore, 0x0, sizeof(pMileageStore) / sizeof(STRUCT_MILEAGESTORE));
 
 	if (!arq)
 	{
-		MessageBoxA(0, "Arquivo /DataBase/Mileage.txt não encontrado", "Erro", 0);
+		MessageBoxA(0, "Arquivo Mileage.txt não encontrado", "Erro", 0);
 		ExitProcess(1);
 		return false;
 	}
@@ -383,6 +354,10 @@ bool Func::ReadMileageListItem()
 
 }
 
+void Func::SendBackCity(int clientId)
+{
+	callCdecl(0x4012C6, void, int)(clientId);
+}
 const std::vector<uint16_t> Func::PlayerInAreaMac(const int32_t client, const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos, char* mac)
 {
 	auto mobsInArea = std::vector<uint16_t>();
@@ -394,7 +369,7 @@ const std::vector<uint16_t> Func::PlayerInAreaMac(const int32_t client, const ST
 
 		if (cuser->Mode == 22)
 		{
-			if (!strcmp(userData2->Ingame.MacAddress, mac))
+			if (!strcmp(userData2->AccountInfo.MacAddress, mac))
 			{ 
 
 				if (pMob[i].TargetX >= minPos.X && pMob[i].TargetX <= maxPos.X && pMob[i].TargetY >= minPos.Y && pMob[i].TargetY <= maxPos.Y)
@@ -414,7 +389,7 @@ const std::vector<uint16_t> Func::CheckMacUserInArea(const STRUCT_POSITION minPo
 	{
 		if (pUser[i].Mode == USER_PLAY)
 		{
-			if (!strcmp(pUserData[i].Ingame.MacAddress, mac))
+			if (!strcmp(pUserData[i].AccountInfo.MacAddress, mac))
 			{
 				if (pMob[i].TargetX >= minPos.X && pMob[i].TargetX <= maxPos.X && pMob[i].TargetY >= minPos.Y && pMob[i].TargetY <= maxPos.Y)
 					UserInArea.push_back(static_cast<uint16_t>(i));
@@ -499,24 +474,25 @@ void Func::NpcTab(int mob, MSG_CreateMob *sm)
 
 }
 
-const std::vector<uint16_t> Func::getPlayerLoja(const int client, char* mac)
+const std::vector<short> Func::getPlayerLoja(const int client, char* mac)
 {
-	auto valor = std::vector<uint16_t>();
+	auto valor = std::vector<short>();
 
 	for (int i = 0; i < 1000; i++)
 	{
 		auto userData2 = &pUserData[i];
 		CUser* cuser = (CUser*)Func::GetUserFromIndex(i);
 
-		if (cuser->Mode == 22)
+		if (cuser->Mode == USER_PLAY)
 		{
-			if (!strcmp(userData2->Ingame.MacAddress, mac))
+			if (!strcmp(pUserData[i].AccountInfo.MacAddress, mac))
 			{
 				if (userData2->Ingame.autoStore)
 					valor.push_back(static_cast<uint16_t>(i));
 			}
 		}
-	}
+	} 
+
 	return valor;
 }
 
@@ -582,22 +558,27 @@ void Func::UpdateStatus(int clientId)
 
 void Func::SendDonateUpdate(int clientId)
 {
+
 	auto userData = &pUserData[clientId];
 
 	pDNTh p;
 	p.Header.Size = sizeof(pDNTh);
 	p.Header.Type = 0xDDF;
 	p.Header.ID = clientId;
-	p.donate = userData->AccountInfo.Cash;
+	p.donate = pUserData[clientId].AccountInfo.Cash;
 
 	SendPacket2(clientId, &p, sizeof(p3BBh));
-
 }
- 
+
 void Func::SendItem2(int clientId, STRUCT_ITEM* item)
 {
 	callCdecl(0x0401401, int, int, STRUCT_ITEM*)(clientId, item);
-} 
+}
+void Func::Keys(int clientId, const char* keys)
+{
+	auto userData = &pUserData[clientId];
+	memcpy(userData->Ingame.Serial, keys, 16);
+}
 
 int Func::ReturnSlotEmpty(int clientId, SlotType Type)
 {
@@ -645,7 +626,44 @@ int Func::ReturnSlotEmpty(int clientId, SlotType Type)
 
 	return Return;
 }
- 
+
+void Func::SendRoyalBit(int clientId)
+{
+	auto userData = &pUserData[clientId];
+
+	if (userData->Ingame.StoreActived)
+	{
+		if (userData->Ingame.StorePoints < 400)
+			userData->Ingame.StorePoints++;
+		else
+		{
+			userData->Ingame.StorePoints = 0;
+			auto slot = ReturnSlotEmpty(clientId, SlotType::Inventory);
+
+			time_t now;
+			time(&now);
+			tm when;
+			localtime_s(&when, &now);
+
+			char tmp[256] = { 0, };
+			if (slot != -1)
+			{
+				strftime(tmp, 256, "!%d-%m-%y %H:%M:%S  Recebeu uma Moeda de Osiris.", &when);
+
+				STRUCT_ITEM moedas = { 5440 };
+				PutItem(clientId, &moedas);
+				SendClientMessage(clientId, tmp);
+			}
+			else
+			{
+				strftime(tmp, 256, "!%d-%m-%y %H:%M:%S Não recebeu a Moeda de Osiris por falta de espaço.", &when);
+				 SendClientMessage(clientId, tmp);
+			}
+		}
+	}
+}
+
+
 bool Func::StartCoinsNPC()
 {
 	FILE* arq = NULL;
@@ -654,7 +672,7 @@ bool Func::StartCoinsNPC()
 
 	if (!arq)
 	{
-		MessageBoxA(0, "Arquivo /DataBase/Moedas.txt não encontrado", "Erro", 0);
+		MessageBoxA(0, "Arquivo não encontrado", "Erro", 0);
 		ExitProcess(1);
 		return false;
 	}
@@ -1289,32 +1307,240 @@ void Func::SendSignalParmArea(int x1, int y1, int x2, int y2, int id, unsigned s
 		}
 	}
 }
+
+void Func::executeForParty(const uint16_t client, const std::function<void(uint16_t)> fn, bool includeLeader)
+{
+	auto mob = GetMobFromIndex(client);
+
+	if (mob->Leader > 0 && mob->Leader < MAX_USER)
+	{
+		auto leader = GetMobFromIndex(Lider(client));
+
+		for (auto i = 0; i < MAX_PARTY; i++)
+		{
+			if (GetPartyLista(client, i) > 0 && GetPartyLista(client, i) < MAX_USER)
+			{
+				auto user = Func::GetUserFromIndex(GetPartyLista(client, i));
+
+				if (user && user->Mode == Playing)
+					fn(GetPartyLista(client, i));
+			}
+		}
+		if (includeLeader)
+			fn(mob->Leader);
+	}
+	else // client = leader
+	{
+		for (auto i = 0; i < MAX_PARTY; i++)
+		{
+			if (GetPartyLista(client, i) > 0 && GetPartyLista(client, i) < MAX_USER)
+			{
+				auto user = Func::GetUserFromIndex(GetPartyLista(client, i));
+
+				if (user && user->Mode == Playing)
+					fn(GetPartyLista(client, i));
+			}
+		}
+
+		if (includeLeader)
+			fn(client);
+	}
+}
+
+bool Func::clearPista()
+{
+	for (int client = 1; client < 1000; client++)
+	{
+		auto mob = GetMobFromIndex(client);
+		auto user = Func::GetUserFromIndex(client); 
+		if (user->Mode != Playing)
+			continue;
+
+
+		if (pUserData[client].Ingame.Pista)
+			pUserData[client].Ingame.Pista = false;
+
+		if (pUserData[client].Ingame.PistaRegistro)
+			pUserData[client].Ingame.PistaRegistro = false;
+
+	}
+
+	return true;
+}
+
+
+
+const std::vector<uint16_t> Func::getPlayerinArea(const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos)
+{
+	auto mobsInArea = std::vector<uint16_t>();
+
+	for (auto i = 1; i < MAX_USER; i++)
+	{
+		CMob* mob = (CMob*)GetMobFromIndex(i);
+		CUser* cuser = (CUser*)Func::GetUserFromIndex(i);
+
+		if (!mob)
+			continue;
+
+		if (cuser->Mode == 22)
+		{
+
+			if (mob->TargetX >= minPos.X && mob->TargetX <= maxPos.X && mob->TargetY >= minPos.Y && mob->TargetY <= maxPos.Y)
+				mobsInArea.push_back(static_cast<uint16_t>(i));
+
+		}
+	}
+	return mobsInArea;
+}
+
+void Func::partyTeleportUxmal(const uint16_t client, const uint16_t posX, const uint16_t posY, const uint16_t mode)
+{
+
+
+	executeForParty(client, [&posX, &posY, &mode](uint16_t member)
+		{
+			auto mob = GetMobFromIndex(member);
+			auto user = GetUserFromIndex(member);
+			auto userData = &pUserData[member];
+
+
+			if (user->Mode == Playing && mob->MOB.CurrentScore.Hp > 0 && mob->TargetX >= 3275 && mob->TargetY >= 1674 && mob->TargetY <= 3317 && mob->TargetY <= 1711) // Verifica se o char está no Uxmal
+			{
+				DoTeleport(member, posX, posY, mode);
+				userData->Ingame.Pista = true;
+			}
+
+		}
+	);
+
+}
  
 
-void Func::SendGuildMedal(int clientId)
+void Func::ExecuteToLeader(int clientId, function<void(int)> fn)
 {
-	auto player =  GetMobFromIndex(clientId);
+	auto user = Func::GetUserFromIndex(clientId);
 
-	if (player->MOB.Guild == 0)
+	if (user->Mode != Playing)
 		return;
 
+	auto mob = GetMobFromIndex(clientId);
 
-	auto guild = Func::GetGuild(player->MOB.Guild);
-
-	struct Packet
+	if (mob->Leader > 0 && mob->Leader < MAX_USER)
 	{
-		MSG_STANDARD Header;
-		STRUCT_GUILD guild;
-	};
+		fn(mob->Leader);
+	}
+	else // client = leader
+	{
+		fn(clientId);
+	}
+}
 
-	Packet packet;
-	memset(&packet, 0x0, sizeof(Packet));
+uint16_t Func::checkPlayerLiveInArea(const uint16_t client, const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos)
+{
+  
+	auto mob = GetMobFromIndex(client);
+
+	auto user = GetUserFromIndex(client); 
+
+	if (user->Mode == Playing && mob->MOB.CurrentScore.Hp > 0 && mob->TargetX >= minPos.X && mob->TargetY >= minPos.Y && mob->TargetX <= maxPos.X && mob->TargetY <= maxPos.Y) return TRUE;
+ 
+	return -1;
+}
+ 
+void Func::sendPistaLider(const uint16_t client, const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos, const uint16_t level)
+{
+	auto mob = GetMobFromIndex(client);
+	auto user = GetUserFromIndex(client);
+	auto userData = &pUserData[client];
+
+	STRUCT_ITEM pista = { 5134 };
+
+	if (pista.sIndex == 5134)
+	{
+		pista.stEffect[0].cEffect = 43;
+		pista.stEffect[0].cValue = level;
+	}
+
+	if (user->Mode == Playing && mob->MOB.CurrentScore.Hp > 0 && mob->TargetX >= minPos.X && mob->TargetY >= minPos.Y && mob->TargetX <= maxPos.X && mob->TargetY <= maxPos.Y)
+		PutItem(client, &pista);
+
+}
 
 
-	packet.Header.ID = clientId;
-	packet.Header.Type = 0x66A;
-	packet.Header.Size = sizeof(Packet);
-	memcpy(&packet.guild, guild, sizeof(STRUCT_GUILD));
+const std::vector<uint16_t> Func::getMobsInArea(const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos)
+{
+	auto mobsInArea = std::vector<uint16_t>();
 
-	Func::SendPacket2(clientId, &packet, sizeof(Packet));
+	for (auto i = 1000; i < 12800; i++)
+	{
+		auto mob = reinterpret_cast<CMob*>(0x1FDECA0 + (i * sizeof(CMob)));
+
+		if (!mob)
+			continue;
+
+		if (mob->Mode == 4 || mob->Mode == 5)
+		{
+			if (mob->TargetX >= minPos.X && mob->TargetX <= maxPos.X && mob->TargetY >= minPos.Y && mob->TargetY <= maxPos.Y)
+				mobsInArea.push_back(static_cast<uint16_t>(i));
+		}
+	}
+	return mobsInArea;
+}
+
+void Func::PartyTeleport(const uint16_t client, const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos, const STRUCT_POSITION dest)
+{
+	executeForParty(client, [&minPos, &maxPos, &dest](uint16_t member)
+		
+	{
+			auto mob = GetMobFromIndex(member);
+			auto user = GetUserFromIndex(member);
+			auto userData = &pUserData[member];
+
+			if (user->Mode == Playing && mob->MOB.CurrentScore.Hp > 0 && mob->TargetX >= minPos.X && mob->TargetY >= minPos.Y && mob->TargetX <= maxPos.X && mob->TargetY <= maxPos.Y)
+				DoTeleport(member, dest.X, dest.Y, 0);
+	}
+	);
+
+}
+const std::vector<uint16_t> Func::getMobsInAreaStr(const STRUCT_POSITION minPos, const STRUCT_POSITION maxPos, const uint32_t str)
+{
+	auto mobsInArea = std::vector<uint16_t>();
+
+	for (auto i = 1000; i < 12800; i++)
+	{
+		auto mob = reinterpret_cast<CMob*>(0x1FDECA0 + (i * sizeof(CMob)));
+
+		if (!mob)
+			continue;
+
+		if (mob->Mode == 4 || mob->Mode == 5)
+		{
+			if (mob->TargetX >= minPos.X && mob->TargetX <= maxPos.X && mob->TargetY >= minPos.Y && mob->TargetY <= maxPos.Y && mob->MOB.BaseScore.Str == str)
+				mobsInArea.push_back(static_cast<uint16_t>(i));
+		}
+	}
+	return mobsInArea;
+}
+
+
+void Func::SpawnClueTowers(int pos)
+{
+	auto torre1 = Func::getMobsInAreaStr({ 3382, 1546 }, { 3390, 1551 }, { 1255 });
+	auto torre2 = Func::getMobsInAreaStr({ 3415, 1580 }, { 3422, 1586 }, { 1255 });
+
+	if (pos == 0 && torre1.size() == 0)
+		CreateMobPista("Torre_Thor", 3386, 1548, "clue_of_runes/Torre", 0); // Torre 1	
+	else if (pos == 1 && torre2.size() == 0)
+		CreateMobPista("Torre_Thor_", 3418, 1582, "clue_of_runes/Torre", 0); // Torre 2
+}
+void Func::SendOrangeNumber(int clientId, int number, int total)
+{
+	p3BBh p;
+	p.Size = sizeof(p3BBh);
+	p.Type = 0x3BB;
+	p.ID = 0x7530;
+	p.cur_mob = number;
+	p.max_mob = total;
+
+	SendPacket2(clientId, &p, sizeof(p3BBh));
 }

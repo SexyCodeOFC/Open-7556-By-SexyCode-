@@ -18,6 +18,8 @@ private:
 
 	static void NKD_RegenMob_CastleStatus();
 
+	static void NKD_TeleportPosition(); //Ok
+	static void NKD_ProcessClientMessage_OnPlayerMovement(); // OK
 	static void NKD_ProcessClientMessage_ReadCommand();
 	static void NKD_CriticalBug();
 	static void NKD_ProcessClientMessage();

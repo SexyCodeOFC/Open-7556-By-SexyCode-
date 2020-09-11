@@ -6,12 +6,12 @@ const INT16 NotCharms[] =
 	560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570,
 	591, 592, 593, 594, 595, 633, 1738, 661, 662, 663, 3464, 5603, 5604, 5605, 5606
 }; 
-#define RATE_RefOdin 100
-#define RATE_CompOdin 100
-#define RATE_CompOdin_ArmaCelestial 100
-#define RATE_CompOdin_SetCelestial 100
-#define RATE_CompPista 100
-#define RATE_RefAmuha 100
+#define RATE_RefOdin 20
+#define RATE_CompOdin 20
+#define RATE_CompOdin_ArmaCelestial 20
+#define RATE_CompOdin_SetCelestial 20
+#define RATE_CompPista 20
+#define RATE_RefAmuha 20
 
 
 int GetChanceRefOdin(STRUCT_ITEM *Item)

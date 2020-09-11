@@ -386,7 +386,7 @@ BOOL HookImpl::AddMessage(CPSock* thisPtr, char* pMsg, int Size)
 
 	if (thisPtr->nSendPosition + Size >= 0x20000)
 	{
-		sprintf(temp, "err,add buffer full %d %d %d %d", thisPtr->nSendPosition, Size, std->Type, thisPtr->Sock);
+		sprintf(temp, "err,add buffer full %d %d %d %d\n", thisPtr->nSendPosition, Size, std->Type, thisPtr->Sock);
 		Log(temp, "-system", 0);
 
 		return FALSE;
@@ -395,7 +395,7 @@ BOOL HookImpl::AddMessage(CPSock* thisPtr, char* pMsg, int Size)
 	// check socket valid
 	if (thisPtr->Sock <= 0)
 	{
-		sprintf(temp, "err,add buffer invalid %d %d %d %d", thisPtr->nSendPosition, Size, std->Type, thisPtr->Sock);
+		sprintf(temp, "err,add buffer invalid %d %d %d %d\n", thisPtr->nSendPosition, Size, std->Type, thisPtr->Sock);
 		Log(temp, "-system", 0);
 
 		return FALSE;
@@ -450,7 +450,46 @@ BOOL HookImpl::AddMessage(CPSock* thisPtr, char* pMsg, int Size)
 
 void HookImpl::BASE_GetCurrentScore(STRUCT_MOB& MOB, STRUCT_AFFECT* Affect, CMob* extra, int* PosX, int* PosY, int* ForceDamage, int* Abs, int* Accuracy, signed int a9, int MotalFace)
 {
-	bGetCurrentScore(MOB, Affect, extra, PosX, PosY, ForceDamage, Abs, Accuracy, a9, MotalFace);
+	bGetCurrentScore(MOB, Affect, extra, PosX, PosY, ForceDamage, Abs, Accuracy, a9, MotalFace);	
+
+#pragma region Balanceamento
+	//Transknight = 0,
+	//Foema = 1,
+	//BeastMaster = 2,
+	//Huntress = 3
+
+	if (MOB.Class == 0)
+	{
+		MOB.CurrentScore.Damage += MOB.CurrentScore.Damage * 20 / 100;
+		MOB.Magic += 20;
+	}
+
+	if (MOB.Class == 1)
+	{
+		if (MOB.CurrentScore.Int < MOB.CurrentScore.Dex)
+		{
+			MOB.CurrentScore.Damage += MOB.CurrentScore.Damage * 45 / 100;
+		}
+
+		MOB.Magic += 45;
+		MOB.CurrentScore.Ac += MOB.CurrentScore.Ac * 35 / 100;
+	}
+
+	if (MOB.Class == 2)
+	{
+		MOB.CurrentScore.Damage += MOB.CurrentScore.Damage * 25 / 100;
+		MOB.Magic += 50;
+	}
+
+	if (MOB.Class == 3)
+	{
+		MOB.CurrentScore.Damage += MOB.CurrentScore.Damage * 15 / 100;
+		MOB.CurrentScore.MaxMp += MOB.CurrentScore.MaxMp * 250 / 100;
+		MOB.Magic += 15;
+	}
+
+#pragma endregion
+
 }
 
 
@@ -463,7 +502,7 @@ void HookImpl::CheckSumPacket(char* pMsg)
 
 	//if (pMsg != NULL && BASE_CheckPacket(debug))
 	{
-		sprintf(temp, "**PACKET_DEBUG** Type:%d Size:%d", debug->Type, debug->Size);
+		sprintf(temp, "**PACKET_DEBUG** Type:%d Size:%d\n", debug->Type, debug->Size);
 		Log(temp, "-system", 0);
 	}
 }
@@ -489,25 +528,16 @@ bool HookImpl::ProcessDBMessage_CharacterLogin(const int conn, unsigned short* p
 	auto userData = &pUserData[conn];
 	if (conn < NULL || conn > MAX_USER)
 		return false;
- 
+	char* pMsg[2000];
 	Func::LoadGuildInfo(conn);
-	Func::SendGuildMedal(conn);
+	Func::SendGuildInfo(conn); 
+	Func::WriteData(conn, "Sistema/Ranking");
 	Func::SendDonateUpdate(conn); 
 	Func::SendSenhaGrupo(conn);
-	Func::WriteData(conn, "Sistema/Ranking");
-	userData->Ingame.autoStore = false;
-	userData->Ingame.PointStore = 0;
+	userData->Ingame.StoreActived = false;
+	userData->Ingame.StorePoints = 0;
 	memset(pUserData[conn].Ingame.PartyPassword, 0, sizeof(pUserData[conn].Ingame.PartyPassword));
-	
-	if (pUserData[conn].Ingame.chave == 1)
-	{
-		char Message[128];
-
-		sprintf(Message, "O Jogador [%s] Está online.", pMob[conn].MOB.MobName);
-
-		Func::SendChatColor(conn, Message, LightGreen, 2);
-	}
-
+	 
 	return false;
 }
 
@@ -584,7 +614,7 @@ char* HookImpl::ReadMessage(CPSock* thisPtr, int* ErrorCode, int* ErrorType)
 		*ErrorType = Size;
 
 		char temp[256];
-		sprintf(temp, "LastPacket, Type: 0x%X - Size: %d - ID: %d", LastPacket.Type, LastPacket.Size, LastPacket.ID);
+		sprintf(temp, "LastPacket, Type: 0x%X - Size: %d - ID: %d\n", LastPacket.Type, LastPacket.Size, LastPacket.ID);
 		Log(temp, "-system", 0);
 
 		return 0;
@@ -706,30 +736,34 @@ char* HookImpl::ReadMessage(CPSock* thisPtr, int* ErrorCode, int* ErrorType)
 // Se retornar true, a execução sai dessa parte.
 bool HookImpl::MobKilledEvent(int32_t generID, int32_t killed, int32_t killer)
 {
-	if (wtState)
-	{
-		CWarTower::MobKilled(killed, killer, 0, 0);
-		return true;
-	}
-	/*if (generID > 0)
-	{
-		if (killed > MAX_USER && killer > 0 && killer < MAX_USER) // mob foi morto por um usuário
+	
+#pragma region Mob_Killed_By_Player 
+ 
+	 if (killed > MAX_USER && killer > 0 && killer < MAX_USER) // mob foi morto por um usuário
 		{
-			auto chance = Rnd::instance().IRandom(0, 1000);
-
-			if (chance > 10)
-			{
-				SendClientMessage(killer, "Aha, pegadinha do malandro!");
-				return true;
-			}
+			auto Mob = GetMobFromIndex(killed);
+			auto Player = GetMobFromIndex(killer); 
+			auto masterId = [&Player, &killer] { return Player->Leader <= 0 ? killer : Player->Leader; }();
+			auto result = ClueOfRunesMgr::instance().onMobKilled(Mob->TargetX, Mob->TargetY, killed, masterId); 
+		 
 		}
-	}*/
+	 
 	return false; 
 }
+#pragma endregion
 // Função que administra o click nos npcs
 // Retornar true, se o npc executou toda a sua função (vai pro fim da func na tmsrv)
 // Retornar false se não foi executado nenhuma função (volta para a tmsrv)
 
+bool HookImpl::onPlayerMovement(const int32_t client, MSG_Action_7556* const packet)
+{
+	if (client <= NULL || client >= MAX_USER)
+		return false;
+
+	auto result = ClueOfRunesMgr::instance().onMoviment(packet->PosX, packet->PosY, client); 
+
+	return false;
+}
 bool HookImpl::OnNpcClick(int32_t client, p28Bh* packet)
 {
 	// Retornar true se 
@@ -811,7 +845,7 @@ bool HookImpl::AddJoinableItens(STRUCT_ITEM* item)
 		case 4120:
 		case 4121:
 		case 5440:
-		case 5441:
+		case 5452:
 		case 3171:
 		case 3172:
 		case 3314:
@@ -820,6 +854,14 @@ bool HookImpl::AddJoinableItens(STRUCT_ITEM* item)
 		case 2443:
 		case 2444:
 		case 1774:
+		case 5451:
+		case 5446:
+		case 5447:
+		case 5448:
+		case 5449:
+		case 5453:
+		case 5454:
+		case 3392:
 
 		return true;
 	}
@@ -1020,7 +1062,9 @@ bool HookImpl::AfterEnterWorld(int clientId)
 int HookImpl::GetDamageControl(int type, int damage, int attacked, int attacker)
 {
 
-	unsigned char pMsg[4096];
+	char pMsg[4096];
+	memset(pMsg, 0x0, sizeof (pMsg));
+
 	MSG_Attack_7556* m = (MSG_Attack_7556*)pMsg;
 	// attacker -> Player me atacando
 	// attacked -> eu recebendo dano
@@ -1089,7 +1133,7 @@ int HookImpl::GetDamageControl(int type, int damage, int attacked, int attacker)
 			// Magic range attack
 			else if (m->Motion == 255)
 			{
-				if (Distance > Range + g_pSpell[m->SkillIndex].Range + 2)
+				if (Distance > Range + g_pSpell[m->SkillIndex].Range + 3)
 				{
 					return false;
 				}
@@ -1099,7 +1143,7 @@ int HookImpl::GetDamageControl(int type, int damage, int attacked, int attacker)
 				// Attacked without possessing any weapon
 				if (WeaponRange == -1)
 				{
-					if (Distance > Range + 3)
+					if (Distance > Range + 4)
 						//if (Distance > Range + 2)
 					{
 						return -1000;
@@ -1108,7 +1152,7 @@ int HookImpl::GetDamageControl(int type, int damage, int attacked, int attacker)
 				// Attacked too far
 				else
 				{
-					if (Distance > Range + WeaponRange + 3)
+					if (Distance > Range + WeaponRange + 4)
 						//if (Distance > Range + WeaponRange + 2)
 					{
 						return -1000;
@@ -1116,6 +1160,7 @@ int HookImpl::GetDamageControl(int type, int damage, int attacked, int attacker)
 				}
 
 			}
+
 
 #pragma region  Controle de mana contra Player deve ficar aqui para funcionar contra range
 			if (pMob[attacked].MOB.Class == 1)
@@ -2443,36 +2488,39 @@ int HookImpl::ExpControl(int conn, int Exp)
 	if (Func::GetPlayerClass(conn) >= Celestial)
 	{
 		
-			if (Level < 150)
-				Exp /= 8;
-
-			else if (Level < 160)
+			if (Level < 120)
 				Exp /= 16;
 
-			else if (Level < 170)
+			else if (Level < 140)
 				Exp /= 24;
 
-			else if (Level < 180)
+			else if (Level < 160)
 				Exp /= 32;
 
+			else if (Level < 180)
+				Exp /= 48;
+
 			else if (Level < 190)
-				Exp /= 40;
+				Exp /= 64;
 
 			else if (Level < 200)
-				Exp /= 48; 
+				Exp /= 128; 
 	}
 	else if (Func::GetPlayerClass(conn) == God)
 	{//Arch
-		if (Level >= 319)
+		if (Level >= 1)
 		{
-			if (Level < 349)
-				Exp /= 4;
+			if (Level < 255)
+				Exp /= 1;
+
+			else if (Level < 349)
+				Exp /= 1;
 
 			else if (Level < 355)
-				Exp /= 8;
+				Exp /= 2;
 
 			else
-				Exp /= 4;
+				Exp /= 1;
 		}
 	}
 	else if (Func::GetPlayerClass(conn) == Mortal)
@@ -2480,16 +2528,106 @@ int HookImpl::ExpControl(int conn, int Exp)
 		if (Level >= 319)
 		{
 			if (Level < 349)
-				Exp /= 2;
+				Exp /= 1;
 
 			else if (Level < 355)
-				Exp /= 4;
+				Exp /= 2;
 
 			else
-				Exp /= 2;
+				Exp /= 1;
 		}
 		 
 	} 
 	return Exp;
 }
 
+int __stdcall HookImpl::teleportPosition(uint32_t client, short* ptrX, short* ptrY, uint32_t* Unknown)
+{
+	short posX = (*ptrX & 0xFFC);
+	short posY = (*ptrY & 0xFFC);
+
+	int returnValue = 0;
+
+	if (client <= NULL || client >= MAX_USER)
+		return returnValue;
+
+	auto mob = GetMobFromIndex(client);
+	auto kingdom = mob->MOB.Clan;
+
+	//if (posX >= 1054 && posY >= 1722 && posX <= 1060 && posY <= 1728)// RvR
+	//{
+	//	if (gameServer.rvr.Action.happening)
+	//	{
+	//		if (!gameServer.rvr.Action.redWins && kingdom == 7)
+	//		{
+	//			*ptrX = (1063 + (rand() % 2));
+	//			*ptrY = (2136 + (rand() % 2));
+	//			*Unknown = 0;
+	//			returnValue = 0;
+	//		}
+
+	//		if (!gameServer.rvr.Action.blueWins && kingdom == 8)
+	//		{
+	//			*ptrX = (1237 + (rand() % 2));
+	//			*ptrY = (1960 + (rand() % 2));
+	//			*Unknown = 0;
+	//			returnValue = 0;
+	//		}
+	//	}
+	//	*Unknown = 0;
+	//	returnValue = 0;
+	//}
+	if (posX >= 2364 && posY >= 2284 && posX <= 2366 && posY <= 2286)
+	{
+		*ptrX = (149 + (rand() % 1));
+		*ptrY = (3789 + (rand() % 1));
+		*Unknown = 0;
+		returnValue = 0;
+	}
+
+	if (posX >= 144 && posY >= 3788 && posX <= 147 && posY <= 3790)
+	{
+		*ptrX = (2365 + (rand() % 1));
+		*ptrY = (2281 + (rand() % 1));
+		*Unknown = 0;
+		returnValue = 0;
+	}
+
+	if (posX >= 2668 && posY >= 2155 && posX <= 2670 && posY <= 2157)
+	{
+		*ptrX = (149 + (rand() % 1));
+		*ptrY = (3773 + (rand() % 1));
+		*Unknown = 0;
+		returnValue = 0;
+	}
+
+	if (posX >= 144 && posY >= 3772 && posX <= 147 && posY <= 3774)
+	{
+		*ptrX = (2669 + (rand() % 1));
+		*ptrY = (2153 + (rand() % 1));
+		*Unknown = 0;
+		returnValue = 0;
+	}
+
+	if (posX >= 1050 && posY >= 1706 && posX <= 1057 && posY <= 1713)//Noatun to gelo para corrigir n aparecer no teto
+	{
+		*ptrX = (3649 + (rand() % 1));
+		*ptrY = (3109 + (rand() % 1));
+
+		mob->MOB.Info.CityID = 3;
+		*Unknown = 0;
+		returnValue = 700;
+	}
+
+	if (posX >= 2360 && posY >= 3913 && posX <= 2376 && posY <= 3941)//Kefra to UxMall
+	{
+
+		*ptrX = (3248 + (rand() % 1));
+		*ptrY = (1701 + (rand() % 1));
+		*Unknown = 0;
+		returnValue = 700;
+	}
+
+
+	return returnValue;
+}

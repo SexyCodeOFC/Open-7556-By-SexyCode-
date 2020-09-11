@@ -84,6 +84,7 @@ bool Exec_MSG_CombineItemAilyn(int conn, char* pMsg)
 	int ipos1 = 0;
 	int ipos2 = 0;
 
+
 	if (_rand <= combine)
 	{
 		ipos1 = m->InvenPos[0];
@@ -91,6 +92,11 @@ bool Exec_MSG_CombineItemAilyn(int conn, char* pMsg)
 
 		if (pMob[conn].MOB.Carry[ipos1].stEffect[1].cEffect == pMob[conn].MOB.Carry[ipos2].stEffect[1].cEffect)
 		{
+			sprintf(temp, "%s - Compos [%d %d:%d:%d:%d] com [%d %d:%d:%d:%d] no NPC Aylin.\n", pMob[conn].MOB.MobName, pMob[conn].MOB.Carry[ipos1].sIndex, pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect,
+				pMob[conn].MOB.Carry[ipos1].stEffect[0].cValue, pMob[conn].MOB.Carry[ipos1].stEffect[1].cEffect, pMob[conn].MOB.Carry[ipos1].stEffect[1].cValue, pMob[conn].MOB.Carry[ipos2].sIndex,
+				pMob[conn].MOB.Carry[ipos2].stEffect[0].cEffect, pMob[conn].MOB.Carry[ipos2].stEffect[0].cValue, pMob[conn].MOB.Carry[ipos2].stEffect[1].cEffect, pMob[conn].MOB.Carry[ipos2].stEffect[1].cValue);
+			Log("-system", temp, pUser[conn].IP);
+
 			if (zrand <= 25)
 			{
 				pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect = pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect;
@@ -130,6 +136,11 @@ bool Exec_MSG_CombineItemAilyn(int conn, char* pMsg)
 		}
 		else
 		{
+			sprintf(temp, "%s - Compos [%d %d:%d:%d:%d] com [%d %d:%d:%d:%d] no NPC Aylin.\n", pMob[conn].MOB.MobName, pMob[conn].MOB.Carry[ipos1].sIndex, pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect,
+				pMob[conn].MOB.Carry[ipos1].stEffect[0].cValue, pMob[conn].MOB.Carry[ipos1].stEffect[1].cEffect, pMob[conn].MOB.Carry[ipos1].stEffect[1].cValue, pMob[conn].MOB.Carry[ipos2].sIndex,
+				pMob[conn].MOB.Carry[ipos2].stEffect[0].cEffect, pMob[conn].MOB.Carry[ipos2].stEffect[0].cValue, pMob[conn].MOB.Carry[ipos2].stEffect[1].cEffect, pMob[conn].MOB.Carry[ipos2].stEffect[1].cValue);
+			Log("-system", temp, pUser[conn].IP);
+
 			if (zrand <= 50)
 			{
 				pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect = pMob[conn].MOB.Carry[ipos1].stEffect[0].cEffect;
@@ -149,6 +160,7 @@ bool Exec_MSG_CombineItemAilyn(int conn, char* pMsg)
 				pMob[conn].MOB.Carry[ipos1].stEffect[2].cValue = pMob[conn].MOB.Carry[ipos2].stEffect[2].cValue;
 			}
 		}
+
 
 		BASE_SetItemSanc(&pMob[conn].MOB.Carry[ipos1], 10, m->Item[3].sIndex - 2441);
 

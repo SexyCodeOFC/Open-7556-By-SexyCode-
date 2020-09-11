@@ -13,6 +13,7 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <functional>
 #pragma comment(lib, "winmm.lib")
 
 #include <structs.h>
@@ -28,4 +29,18 @@ using namespace std;
 #include "ConstantPatch.h"
 #include "Language.h"
 #include "CWarTower.h"
+#include <map>
+#include <memory>
+#include <cstdint>
+#include "ClueOfRunes.h"
+#include "ClueOfRunesFactory.h"
+#include "ClueOfRunesMgr.h"
+#include "Lich.h"
+#include "Torre.h"
+#include "Amon.h"
+#include "Lobo.h"
+#include "Labirinto.h"
+#include "Teleportador.h"
+#include "Zakum.h"
+
 #include <time.h>

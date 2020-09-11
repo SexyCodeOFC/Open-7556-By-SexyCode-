@@ -223,3 +223,139 @@ void Func::AgruparItem(int slot, int index)
 	SendPacketDirect((char*)&Packet, sizeof(Packet));
 }
  
+
+bool MacroPega = false; // Desativado Por Padrão
+int WaterScrollPosition[3][10][2] = {
+	{//N
+		{ 1121, 3553 }, //LV1
+		{ 1085, 3553 }, //2
+		{ 1049, 3553 }, //3
+		{ 1049, 3517 }, //4
+		{ 1050, 3481 }, //5
+		{ 1086, 3481 }, //6
+		{ 1122, 3481 }, //7
+		{ 1122, 3517 }, //8
+		{ 1086, 3518 } //9
+	},
+	{//M
+		{ 1249, 3681 }, //LV1
+		{ 1213, 3681 }, //2
+		{ 1178, 3681 }, //3
+		{ 1178, 3645 }, //4
+		{ 1178, 3609 }, //5
+		{ 1214, 3609 }, //6
+		{ 1249, 3609 }, //7
+		{ 1249, 3645 }, //8
+		{ 1214, 3645 }, //9
+	},
+	{//A
+		{ 1378, 3554 }, //LV1
+		{ 1342, 3553 }, //2
+		{ 1306, 3553 }, //3
+		{ 1306, 3517 }, //4
+		{ 1306, 3481 }, //5
+		{ 1342, 3481 }, //6
+		{ 1378, 3481 }, //7
+		{ 1378, 3517 }, //8
+		{ 1342, 3517 } //9
+	}
+};
+
+
+void DLL_UseItem(int slot) { // Usa um item consumível
+	p373h sendData;
+	memset(&sendData, 0x0, sizeof(p373h));
+	sendData.Header.Size = sizeof(p373h);
+	sendData.Header.Type = 0x373;
+	sendData.Header.ID = GetClientID();
+	sendData.Src.Type = sendData.Dst.Type = 1;
+	sendData.Dst.Slot = sendData.Src.Slot = slot;
+	sendData.Position.X = GetCPosX();
+	sendData.Position.Y = GetCPosY();
+	SendPacket((char*)&sendData, sizeof(p373h));
+}
+
+void WINAPI DllThreadMacro() {
+	while (true) {
+		Sleep(1000);
+		if (MacroPega) {
+			//Func::ShowExpMessage(0xFFFFAAAA, Func::stringFormat("Macro Perga ON"));
+			auto mob = &GetChar();
+
+			int usarPerga = 0;
+			int slotsInv = 30;
+			if (mob->Carry[60].sIndex == 3467) slotsInv += 15;
+			if (mob->Carry[61].sIndex == 3467) slotsInv += 15;
+
+			int salaFounded = false;
+			int tipoPerga = -1;
+			int SalaPerga = -1;
+			int pergaItem = 0;
+
+			// Procurar Tipo de Perga / Sala:
+			for (tipoPerga = 0; tipoPerga < 3; tipoPerga++) {
+				for (SalaPerga = 0; SalaPerga <= 8; SalaPerga++)
+				{
+					if (GetCPosX() >= WaterScrollPosition[tipoPerga][SalaPerga][0] - 15
+						&& GetCPosX() <= WaterScrollPosition[tipoPerga][SalaPerga][0] + 15
+						&& GetCPosY() >= WaterScrollPosition[tipoPerga][SalaPerga][1] - 15
+						&& GetCPosY() <= WaterScrollPosition[tipoPerga][SalaPerga][1] + 15)
+					{
+						salaFounded = true;
+
+						break;
+					}
+				}
+				if (salaFounded) break;
+			}
+			if (salaFounded) {
+				if (tipoPerga == 0) { pergaItem = SalaPerga + 3173; } // Agua N
+				else if (tipoPerga == 1) { pergaItem = SalaPerga + 777; } // Agua M
+				else if (tipoPerga == 2) { pergaItem = SalaPerga + 3182; } // Agua A
+
+				if (SalaPerga == 8) { Sleep(1000); } // Boss
+				else if (pergaItem <= 0) { Sleep(1000); }
+				else {
+					int pergaSlotItem = -1;
+					for (int j = 0; j < slotsInv; ++j) {
+						if (mob->Carry[j].sIndex == pergaItem + 1)
+							pergaSlotItem = j;
+					}
+
+					if (pergaSlotItem >= 0) {
+						DLL_UseItem(pergaSlotItem);
+						Sleep(1000);
+					}
+					else { Sleep(1000); } // Está na sala mas ainda não chegou o item.
+				}
+			}
+			else {
+				short posX = GetCPosX();
+				short posY = GetCPosY();
+				if (posX == NULL || posY == NULL) MacroPega = false;
+				else {
+					if (GetCPosX() >= 1965 - 10 && GetCPosX() <= 1965 + 10 && GetCPosY() >= 1770 - 10 && GetCPosY() <= 1770 + 10) {
+						int pergaSlotItem = -1;
+						for (int k = 0; k < slotsInv; ++k) {
+							if (mob->Carry[k].sIndex == 3173 || mob->Carry[k].sIndex == 777 || mob->Carry[k].sIndex == 3182)
+								pergaSlotItem = k;
+						}
+						if (pergaSlotItem >= 0) {
+							Sleep(5000);
+							DLL_UseItem(pergaSlotItem);
+							Sleep(1000);
+						}
+						else {
+							MacroPega = false;
+							Func::SendMessageExp(Red, "Macro de Pergaminho desativado.");
+						}
+					}
+					else {
+						MacroPega = false;
+						Func::SendMessageExp(Red, "Macro de Pergaminho desativado.");
+					}
+				}
+			}
+		}
+	}
+}

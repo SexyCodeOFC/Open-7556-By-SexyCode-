@@ -52,7 +52,7 @@
 #define EF2 stEffect[1].cEffect
 #define EFV2 stEffect[1].cValue
 #define EF3 stEffect[2].cEffect
-#define EFV3 stEffect[2].cValue 
+#define EFV3 stEffect[2].cValue
 
 ///Controle de Rates
 //+9 +10  +11  +12  +13  +14  +15
@@ -124,7 +124,7 @@ static const int RateRefItemCele[] = { 100, 100, 100, 100, 100, 100, 100 };
 #define MAX_STRINGTABLESIZE 128
 
 #define SECRETSTONE_RATE 95 // Padrão 95
-#define SPIRITUALSTONE_RATE 10 // Padrão 20
+#define SPIRITUALSTONE_RATE 30 // Padrão 20
 #define RATE_Mytrill_Falha 25
 #define RATE_Mytrill_Sucesso 26
 #define Ref_Selado 100
@@ -141,6 +141,11 @@ static const int RateRefItemCele[] = { 100, 100, 100, 100, 100, 100, 100 };
 
 #define TIME_3HOUR TIME_1HOUR * 3
 
+#define ENDLESSTOWER		    1019
+
+#define Zakum_Start				5779
+#define Zakum_End				5783
+
 #define ENDLESSTOWER 1019
 
 #define _MSG      	short		  Size;			\
@@ -149,7 +154,6 @@ static const int RateRefItemCele[] = { 100, 100, 100, 100, 100, 100, 100 };
 					short		  Type;			\
 					short		  ID;			\
 					unsigned int  ClientTick;
-
 
 enum ClientColor
 {
@@ -217,7 +221,7 @@ struct STRUCT_POSITION
 	uint16_t X;
 	uint16_t Y;
 };
-
+ 
 struct STRUCT_ITEM
 {
 	uint16_t sIndex;
@@ -312,7 +316,7 @@ struct STRUCT_MOB
 };
 
 struct ServerStatus
-{
+{ 
 	struct
 	{
 		int AltarTime;
@@ -383,7 +387,7 @@ struct UserData
 {
 	struct _AccountInfo
 	{
-		
+		char MacAddress[18];
 		char LastIP[16];
 		unsigned int Cash;
 		unsigned int NewbieReward;
@@ -461,14 +465,18 @@ struct UserData
 		int QuizTempo;
 
 		int chave;
-		  
-		char MacAddress[18];
 
-		int CountDownPacketSecurity;
+		char MacAddress[20];
 
-		int WarningPacketSecurity;
+		int StorePoints;
 
-		int ClientOK;
+		bool StoreActived;
+
+		char Serial[30];
+
+		bool Pista;
+
+		bool PistaRegistro;
 
 	} Ingame;
 

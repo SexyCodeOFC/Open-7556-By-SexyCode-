@@ -14,7 +14,7 @@ bool HookPatch::initialize()
 		auto& hooks = HookMgr::instance();
 
 		hooks.setHook(eHookType::JMP, 0x45E2F0, hooks.getAddress(&HookPatch::NKD_ProcessClientMessage), 4);
-		//hooks.setHook(eHookType::JMP, 0x4BCF2E, hooks.getAddress(&HookPatch::NKD_MobKilled_Event), 5);
+		hooks.setHook(eHookType::JMP, 0x4BCF2E, hooks.getAddress(&HookPatch::NKD_MobKilled_Event), 5);
 		 
 
 		/* Corrige a compra de item no NPC */
@@ -77,7 +77,7 @@ bool HookPatch::initialize()
 		hooks.setHook(eHookType::JMP, 0x45CE13, 0x45CEC2, 2);
 
 		/* Corrige a reoganização no baú */
-		//hooks.setHook(eHookType::JMP, 0x4A2800, 0x4A28F3, 5);
+		hooks.setHook(eHookType::JMP, 0x4A2800, 0x4A28F3, 5);
 
 		/* Corrige a utilização do Packet UpdateItem 0x374 */
 		hooks.setHook(eHookType::JE, 0x45E50D, 0x47D690);
@@ -106,6 +106,7 @@ bool HookPatch::initialize()
 		// FIX 2 
 		/* Correção do Crítico 2 */
 		hooks.setHook(eHookType::JMP, 0x410C87, hooks.getAddress(&NKD_CriticalBug));
+
 		// Remover o Limitador de Exp
 		hooks.setValue(0x004BDD55 + 6, 250000);
 		hooks.setValue(0x004BDD61 + 6, 250000);
@@ -156,7 +157,18 @@ bool HookPatch::initialize()
 		// Controle de Exp
 		hooks.setHook(eHookType::JMP, 0x00401C8A, hooks.getAddress(&HookImpl::ExpControl));
 		//hook responsavel por enviar informações da interface ao servidor.
-		hooks.setHook(eHookType::JMP, 0x48960A, hooks.getAddress(&NKD_ProcessClientMessage_ReadCommand), 1);
+	//	hooks.setHook(eHookType::JMP, 0x48960A, hooks.getAddress(&NKD_ProcessClientMessage_ReadCommand), 1);
+		//hook para controle de movimento dos players
+		hooks.setHook(eHookType::JMP, 0x461678, hooks.getAddress(&HookPatch::NKD_ProcessClientMessage_OnPlayerMovement), 4);
+
+		// Desativa Pista de Runas nativa
+		hooks.fillWithNop(0x4B0D16, 2);
+		hooks.setValue(0x004B0D1F, 0xEB);
+
+
+		hooks.setHook(eHookType::JMP, 0x4698FA, hooks.getAddress(&HookPatch::NKD_TeleportPosition), 2);
+
+
 
 		assert(sizeof(STRUCT_ITEM) == 8);
 		assert(sizeof(STRUCT_SCORE) == 28);
@@ -173,6 +185,52 @@ bool HookPatch::initialize()
 	}
 }
 
+__declspec(naked) void HookPatch::NKD_TeleportPosition()
+{
+	__asm
+	{
+		LEA EAX, [EBP - 0XC04]
+		PUSH EAX
+		LEA ECX, [EBP - 0XBF4]
+		PUSH ECX
+		LEA EDX, [EBP - 0xBF0]
+		PUSH EDX
+		PUSH DWORD PTR SS : [EBP + 0x8]
+		CALL HookImpl::teleportPosition
+
+
+		TEST EAX, EAX
+		JNZ Pula
+
+		LEA EAX, [EBP - 0xC04]
+		PUSH EAX
+		MOV EAX, 0x469901
+		JMP EAX
+
+		Pula :
+		MOV EAX, 0x469917
+			JMP EAX
+	}
+}
+__declspec(naked) void HookPatch::NKD_ProcessClientMessage_OnPlayerMovement()
+{
+	__asm
+	{
+		PUSH DWORD PTR SS : [EBP - 0x318] // Packet
+		PUSH DWORD PTR SS : [EBP + 0x8]
+		CALL HookImpl::onPlayerMovement
+		TEST AL, AL // return false
+		JE lblContinueExecution
+		PUSH 0x4915F7
+		RETN
+
+		lblContinueExecution :
+		MOV EAX, DWORD PTR SS : [EBP + 0x8]
+			IMUL EAX, EAX, 0x6BC
+			PUSH 0x461681
+			RETN
+	}
+}
 // aqui dentro vai chamar os comandos que serão enviado do cliente ao servidor
 __declspec(naked) void HookPatch::NKD_ProcessClientMessage_ReadCommand()
 {

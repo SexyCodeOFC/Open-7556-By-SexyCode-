@@ -4,6 +4,7 @@
 #include "Gui.h"
 #include "PacketControl.h"
 #include "nativefunctions.h"
+#include "Functions.h"
 
 char* CallBack::RecvPacket(char* pMsg, int32_t pSize)
 {
@@ -378,10 +379,119 @@ bool CallBack::AddAmountItem(int32_t itemID)
 	{
 		switch (itemID)
 		{
-		case 3902:
+		case 413:
 			return true;
-
+		case 419:
+			return true;
+		case 420:
+			return true;
+		case 412:
+			return true;
+		case 4017:
+			return true;
+		case 4018:
+			return true;
+		case 4019:
+			return true;
+		case 4020:
+			return true;
+		case 4117:
+			return true;
+		case 4118:
+			return true;
+		case 4119:
+			return true;
+		case 4120:
+			return true;
+		case 4121:
+			return true;
+		case 5440:
+			return true;
+		case 4140:
+			return true;
+		case 4016:
+			return true;
+		case 4041:
+			return true;
+		case 3314:
+			return true;
+		case 777:
+			return true;
+		case 3182:
+			return true;
+		case 5450:
+			return true;
 		case 3200:
+			return true;
+		case 3201:
+			return true;
+		case 3202:
+			return true;
+		case 3203:
+			return true;
+		case 3204:
+			return true;
+		case 3205:
+			return true;
+		case 5459:
+			return true;
+		case 5460:
+			return true;
+		case 5461:
+			return true;
+		case 3326:
+			return true;
+		case 1774:
+			return true;
+		case 5480:
+			return true;
+		case 4011:
+			return true;
+		case 4026:
+			return true;
+		case 4027:
+			return true;
+		case 4028:
+			return true;
+		case 4029:
+			return true;
+		case 454:
+			return true;
+		case 455:
+			return true;
+		case 5489:
+			return true;
+		case 4144:
+			return true;
+		case 3171:
+			return true;
+		case 3172:
+			return true;
+		case 2441:
+			return true;
+		case 2442:
+			return true;
+		case 2443:
+			return true;
+		case 2444:
+			return true;
+		case 5441:
+			return true;
+		case 5451:
+			return true;
+		case 5442:
+			return true;
+		case 5446:
+			return true;
+		case 5447:
+			return true;
+		case 5448:
+			return true;
+		case 5449:
+			return true;
+		case 5453:
+			return true;
+		case 5454:
 			return true;
 
 		}
@@ -464,94 +574,59 @@ bool CallBack::SetItemPriceString(STRUCT_ITEM* item, char* str)
 
 	else if (item->sIndex == 3379) // POÇAO DIVINA 7 DIAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 350 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3380) // POÇAO DIVINA 15 DIAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3381) // POÇAO DIVINA 30 DIAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 1000 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3364) // POÇAO SAÚDE 7 DIAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 200 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3365) // POÇAO SAÚDE 15 DIAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3319) // POÇAO KAPPA 20HORAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3313) // POÇAO VIGOR 20HORAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 3206) // JOIAS
+	else if (item->sIndex == 3206) // JOIA DO PODER
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 3207) // JOIAS
+	else if (item->sIndex == 3207) // JOIA DA ARMAZENAGEM
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 3208) // JOIAS
+	else if (item->sIndex == 3208) // JOIA DA PRECISÃO
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 3209) // JOIAS
+	else if (item->sIndex == 3209) // JOIA DA MAGIA
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 412) // POEIRA ORI
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 413) // POEIRA LAC
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 3336) // RESTAURADOR DE PONTOS
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 4141) // LAC 100
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 3140) // PEDRA DA LUZ
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 576) // BERIL
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	}
-	else if (item->sIndex == 578) // ADAMANTITA
-	{
-		sprintf(str, "Preço: ... Moeda Lojinha");
-		return true;
-	} 
 #pragma endregion
 
 
@@ -559,107 +634,102 @@ bool CallBack::SetItemPriceString(STRUCT_ITEM* item, char* str)
 
 	else if (item->sIndex == 3173) // PERGAMINHO AGUA N
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 777) // PERGAMINHO AGUA M
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 200 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3182) // PERGAMINHO AGUA A
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3172) // CARTA DE DUELO N
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3171) // CARTA DE DUELO M
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 200 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 1731) // CARTA DE DUELO A
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3324) // PESADELO N
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3325) // PESADELO M
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3326) // PESADELO A
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 4019) // REPLATION D
 	{
-		sprintf(str, "Preço: ... Donate Coins | 1 Moeda Lojinha");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 4020) // REPLATION E
 	{
-		sprintf(str, "Preço: ... Donate Coins | 2 Moeda Lojinha");
+		sprintf(str, "Preço: 200 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3900) // FADA VERDE 3D
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3901) // FADA AZUL 3D
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3902) // FADA VERMELHA 3D
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
-	else if (item->sIndex == 3914) // FADA PRATEADA 7D
+	else if (item->sIndex == 3916) // FADA DO VALE 7D
 	{
-		sprintf(str, "Preço: .... Donate Coins");
-		return true;
-	}
-	else if (item->sIndex == 3915) // FADA DOURADA 7D
-	{
-		sprintf(str, "Preço: .... Donate Coins");
-		return true;
-	}
-	else if (item->sIndex == 3909) // FADA DO VALE 1D
-	{
-		sprintf(str, "Preço: .... Donate Coins");
-		return true;
-	}
-	else if (item->sIndex == 3910) // FADA DO VALE 7D
-	{
-		sprintf(str, "Preço: .... Donate Coins");
+		sprintf(str, "Preço: 700 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3467) // BOLSA ANDARILHO
 	{
-		sprintf(str, "Preço: ... Donate Coins | ... Moedas Osiris");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex >= 4151 && item->sIndex <= 4158) // TRAJES SIMPLES
 	{
-		sprintf(str, "Preço: ... Donate Coins | ... Moedas Osiris");
+		sprintf(str, "Preço: 800 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex >= 4159 && item->sIndex <= 4188) // TRAJES PREMIUM
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 1200 Donate Coins");
+		return true;
+	}
+	else if (item->sIndex == 5451) // FRAGMENTO DE CHAVE
+	{
+		sprintf(str, "Preço: 100 Donate Coins");
+		return true;
+	}
+	else if (item->sIndex == 5442) // TESOURO DE SET
+	{
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 #pragma endregion
@@ -669,70 +739,65 @@ bool CallBack::SetItemPriceString(STRUCT_ITEM* item, char* str)
 
 	else if (item->sIndex == 3344) // CATALIZADOR KAPEL
 	{
-		sprintf(str, "Preço: .... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3345) // CATALIZADOR
 	{
-		sprintf(str, "Preço: .... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3346) // CATALIZADOR
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3347) // CATALIZADOR
 	{
-		sprintf(str, "Preço: ... Donate Coins");
-		return true;
-	}
-	else if (item->sIndex == 3348) // POÇAO KAPPA 20HORAS
-	{
-		sprintf(str, "Preço: ... Donate Coins");
-		return true;
-	}
-	else if (item->sIndex == 3349) // POÇAO VIGOR 20HORAS
-	{
-		sprintf(str, "Preço: .... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex >= 3351 && item->sIndex <= 3356) // RESTAURADORES
 	{
-		sprintf(str, "Preço: .... Donate Coins");
+		sprintf(str, "Preço: 1500 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3373) // RAÇAO CAVALO PACK
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 50 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3376) // RAÇAO UNI PACK
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
+		return true;
+	}
+	else if (item->sIndex == 3377) // RAÇAO GRIFO PACK
+	{
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3438) // ACELERADOR
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 
 	else if (item->sIndex == 4128) // ESFERA N
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 
 	else if (item->sIndex == 4129) // ESFERA M
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 300 Donate Coins");
 		return true;
 	}
 
 	else if (item->sIndex == 4130) // ESFERA A
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 #pragma endregion
@@ -742,37 +807,37 @@ bool CallBack::SetItemPriceString(STRUCT_ITEM* item, char* str)
 
 	else if (item->sIndex >= 3397 && item->sIndex <= 3406) // TINTURAS
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3417) // REMOVEDOR DE TINTURA
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 500 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3343) // PERGAMINHO DO PERDAO
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 700 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 4140) // BAU EXP
 	{
-		sprintf(str, "Preço: ... Donate Coins");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 3314) // FRANGO PVE
 	{
-		sprintf(str, "Preço: ... Donate Coins | ... Moeda Lojinha");
+		sprintf(str, "Preço: 100 Donate Coins");
 		return true;
 	}
 	else if (item->sIndex == 1739) // CHOCOLATE DO AMOR
 	{
-		sprintf(str, "Preço: ... | ... Moeda Lojinha");
+		sprintf(str, "Preço: 100");
 		return true;
 	}
 	else if (item->sIndex == 4145) // CORAÇAO DOCE
 	{
-		sprintf(str, "Preço: ... | ... Moeda Lojinha");
+		sprintf(str, "Preço: 100");
 		return true;
 	}
 #pragma endregion
@@ -874,9 +939,9 @@ void CallBack::HKD_Start()
 
 
 
-		memcpy(ServerName->ServerName[1].Nome, "W.Y.D ", 9);	  //Servidor
-		memcpy(ServerName->ServerName[2].Nome, "W.Y.D ", 9);  //Novato
-		memcpy(ServerName->ServerName[3].Nome, "Teste", 9);	  //Servidor
+		memcpy(ServerName->ServerName[1].Nome, "WYD Open 756", 9);	  //Servidor
+		memcpy(ServerName->ServerName[2].Nome, "WYD Open 756 ", 9);  //Novato
+		memcpy(ServerName->ServerName[3].Nome, "WYD Open 756 ", 9);	  //Servidor
 	}
 
 	try
@@ -899,7 +964,7 @@ void CallBack::HKD_Open()
 		Aberto = true;
 
 		static auto JanelaNome = reinterpret_cast<STRUCT_NOMEJANELA*>(0x5F9320);
-		memcpy(JanelaNome->Nome, "By[SexyCode]", 20);
+		memcpy(JanelaNome->Nome, "WYD Open 756", 20);
 	}
 }
 
@@ -1007,7 +1072,68 @@ void CallBack::HKD_OpenInventory(UINT32 Open)
 
 int CallBack::HKD_SendChat(char* command)
 {  
-	 
+	if (strcmp(command, "/agrupador") == 0)
+	{
+
+		uint16_t itemId = 413;
+		uint16_t itemId2 = 412;
+		uint16_t itemId3 = 4019;
+		uint16_t itemId4 = 4020;
+		uint16_t itemId5 = 419;
+		uint16_t itemId6 = 420;
+		uint16_t itemId7 = 4117;
+		uint16_t itemId8 = 4118;
+		uint16_t itemId9 = 4119;
+		uint16_t itemId10 = 4120;
+		uint16_t itemId11 = 4121;
+		uint16_t itemId12 = 5453;
+		uint16_t itemId13 = 5454;
+		switch (agrupar_item)
+		{
+		case true:
+			Func::SendMessageExp(Red, "Auto Agrupador Desativado");
+			agrupar_item = false;
+			break;
+
+		case false:
+			Func::SendMessageExp(LightGreen, "Auto Agrupador Ativado");
+			agrupar_item = true;
+			lista_itens_agrupar.push_back(itemId);
+			lista_itens_agrupar.push_back(itemId2);
+			lista_itens_agrupar.push_back(itemId3);
+			lista_itens_agrupar.push_back(itemId4);
+			lista_itens_agrupar.push_back(itemId5);
+			lista_itens_agrupar.push_back(itemId6);
+			lista_itens_agrupar.push_back(itemId7);
+			lista_itens_agrupar.push_back(itemId8);
+			lista_itens_agrupar.push_back(itemId9);
+			lista_itens_agrupar.push_back(itemId10);
+			lista_itens_agrupar.push_back(itemId11);
+			lista_itens_agrupar.push_back(itemId12);
+			lista_itens_agrupar.push_back(itemId13);
+
+			break;
+		}
+		return false;
+	}
+
+	/*if (strcmp(command, "/macroperga") == 0)
+	{
+		switch (MacroPega)
+		{
+		case true:
+			Func::SendMessageExp(Red, "Macro de Pergaminho Desativado");
+			MacroPega = false;
+			break;
+
+		case false:
+
+			Func::SendMessageExp(LightGreen, "Macro de Pergaminho Ativado");
+			MacroPega = true;
+			break;
+		}
+		return false;
+	}*/
 	return true;
 }
 

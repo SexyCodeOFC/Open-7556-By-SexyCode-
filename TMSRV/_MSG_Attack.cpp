@@ -67,7 +67,7 @@ bool Exec_MSG_Attack(int conn, char* pMsg)
 	{
 		//pMob[conn].CrackError = SystemTime + 10800;
 		Log("Kicked for hacking", pUser[conn].AccountName, pUser[conn].IP);
-		CloseUser(conn);
+		//CloseUser(conn);
 		return false;
 	}
 
@@ -79,7 +79,7 @@ bool Exec_MSG_Attack(int conn, char* pMsg)
 
 		//pMob[conn].CrackError = SystemTime + 10800;
 		Log("Kicked for hacking", pUser[conn].AccountName, pUser[conn].IP);
-		CloseUser(conn);
+		//CloseUser(conn);
 		return false;
 	}
 
@@ -91,7 +91,7 @@ bool Exec_MSG_Attack(int conn, char* pMsg)
 
 		//pMob[conn].CrackError = SystemTime + 10800;
 		Log("Kicked for hacking", pUser[conn].AccountName, pUser[conn].IP);
-		CloseUser(conn);
+		//CloseUser(conn);
 		return false;
 	}
 
@@ -103,7 +103,7 @@ bool Exec_MSG_Attack(int conn, char* pMsg)
 
 		//pMob[conn].CrackError = SystemTime + 10800;
 		Log("Kicked for hacking", pUser[conn].AccountName, pUser[conn].IP);
-		CloseUser(conn);
+		//CloseUser(conn);
 		return false;
 	}
 
@@ -115,7 +115,7 @@ bool Exec_MSG_Attack(int conn, char* pMsg)
 
 		//pMob[conn].CrackError = SystemTime + 10800;
 		Log("Kicked for hacking", pUser[conn].AccountName, pUser[conn].IP);
-		CloseUser(conn);
+		//CloseUser(conn);
 		return false;
 	}
 

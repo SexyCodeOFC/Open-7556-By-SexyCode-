@@ -52,10 +52,10 @@ void CWarTower::ProcessEnd(tm* timeinfo)
 					SetGuildFame(Guild, 100);
 
 					char szMsg[96];
-					sprintf(szMsg, "Guerra de Torres finalizada! A Guild [%s] foi a vencedora!", GuildName);
+					sprintf(szMsg, "Guerra de Torres finalizada! A Guild [%s] foi a vencedora!\n", GuildName);
 					SendNotice(szMsg);
 
-					sprintf(temp, "etc,war_tower guild:%s-%d +100 fame", GuildName, Guild);
+					sprintf(temp, "etc,war_tower guild:%s-%d +100 fame\n", GuildName, Guild);
 					Log(temp, "-system", 0);
 				}
 				else

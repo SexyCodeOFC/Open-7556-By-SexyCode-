@@ -1,5 +1,4 @@
 #include "stdafx.h"
-STRUCT_GUILD				Global::guild[1000] = { 0, };
 ServerStatus ServerInfo;
 UserData pUserData[MAX_USER];
 CMob* pMob;
@@ -11,7 +10,8 @@ STRUCT_SPELL* g_pSpell;
 CNPCGenerator* mNPCGen;
 STRUCT_GUILD GuildInfo[MAX_USER];
 MSG_STANDARD LastPacket;
-STRUCT_MILEAGESTORE pMileageStore[500]; 
+STRUCT_MILEAGESTORE pMileageStore[500];
+STRUCT_GUILD(*g_pGuild)[4096];
 Moeda coins[500];
 char(*g_pMessageStringTable)[MAX_STRINGTABLESIZE];
 unsigned short (*pItemGrid)[MAX_GRIDX];

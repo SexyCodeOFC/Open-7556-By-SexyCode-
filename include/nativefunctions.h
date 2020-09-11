@@ -22,6 +22,7 @@ static int32_t(*ReadMob)(STRUCT_MOB*, char* folder) = (int32_t(*)(STRUCT_MOB*, c
 static void(*GenerateMob)(int32_t, int32_t, int32_t) = (void(*)(int32_t, int32_t, int32_t)) 0x401C30;
 static void(*GenerateRandomMob)(int32_t) = (void(*)(int32_t)) 0x401627;
 static int(*GenerateSummon)(int conn, int SummonID, STRUCT_ITEM* Item) = (int(__cdecl*)(int, int, STRUCT_ITEM*)) 0x401744;
+static int32_t(*CreateMobPista)(char*, int32_t, int32_t, char*, int32_t) = (int32_t(*) (char*, int32_t, int32_t, char*, int32_t)) 0x40177B;
 static int32_t(*CreateMob)(char *, int32_t, int32_t, char *) = (int32_t(*) (char *, int32_t, int32_t, char *)) 0x40177B;
 static void(*CharLogOut)(int32_t client) = (void(*)(int32_t)) 0x401528;
 static void(*ClearArea)(int32_t x1, int32_t y1, int32_t x2, int32_t y2) = (void(*)(int32_t, int32_t, int32_t, int32_t)) 0x401ACD;
@@ -43,6 +44,7 @@ static void(*DoRemoveAffect)(int conn, int Affect) = (void(__cdecl*)(int, int)) 
 static void(*SendReqParty)(int conn, int Leader, int PartyID) = (void(__cdecl*)(int, int, int)) 0x401591;
 static int(*GetCitizen)(int conn) = (int(__cdecl*)(int)) 0x40109B;
 static void(*DeleteMob)(int conn, int Type) = (void(__cdecl*)(int, int)) 0x401B90;
+static void(*DeleteMobPista)(int32_t client, int32_t mob, int32_t reason, int32_t) = (void(*)(int32_t, int32_t, int32_t, int32_t)) 0x447A60;
 static void(*GetGuildName)(int GuildIndex, char* strName) = (void(__cdecl*)(int, char*)) 0x4011CC;
 static void(*SetGuildFame)(int GuildIndex, int Value) = (void(__cdecl*)(int, int)) 0x401C03;
 static int(*PutItemCargo)(int conn, int ItemID, STRUCT_ITEM* Item) = (int(__cdecl*)(int, int, STRUCT_ITEM*)) 0x40144C;
@@ -136,7 +138,7 @@ static void(__stdcall* _Initialize)(CMob* thisPtr) = (void(__stdcall*)(CMob*)) 0
 static void(*CloseUser)(int32_t client) = (void(__cdecl*)(int32_t)) 0x4B8240;
 
 #elif _CLIENT
-
+ 
 static int32_t(*BASE_GetItemAmount)(STRUCT_ITEM* item) = (int32_t(*)(STRUCT_ITEM*)) 0x5386C1;
 static int32_t(*BASE_GetItemSanc)(STRUCT_ITEM* item) = (int32_t(*)(STRUCT_ITEM*)) 0x537FEE;
 static int32_t(*BASE_GetItemAbility)(STRUCT_ITEM* item, uint8_t ef) = (int32_t(*)(STRUCT_ITEM*, uint8_t)) 0x5368EE;
@@ -157,9 +159,9 @@ static int32_t __cdecl CalcAddress(int32_t addr)
 #define addr_client_chat_1 CalcAddress(0x005B8113 - 0x400000)
 #define addr_client_chat_2 CalcAddress(0x00406AC8 - 0x400000)
 #define addr_client_chat_3 CalcAddress(0x00408569 - 0x400000)
-#define IPLocal "127.0.0.1"
-#define IPServer "127.0.0.1"
-#define IPTeste "127.0.0.1"
+#define IPLocal "144.217.101.69"
+#define IPServer "144.217.101.69"
+#define IPTeste "144.217.101.69"
 #endif
 
 #endif // !NATIVE_FUNCTIONS_H
